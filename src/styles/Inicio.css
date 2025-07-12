@@ -1,0 +1,484 @@
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+
+/* Container */
+.container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #0891b2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header */
+header {
+    position: relative;
+    z-index: 10;
+    padding: 1rem 1.5rem;
+}
+
+nav {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logoText {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.contactButton {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hero Section */
+.heroSection {
+    position: relative;
+    padding: 5rem 1.5rem;
+}
+
+.heroContainer {
+    max-width: 72rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.heroCard {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.heroTitle {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.heroSubtitle {
+    display: block;
+    background: linear-gradient(to right, white, #e0f7fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.heroDescription {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    max-width: 48rem;
+    margin: 0 auto 2rem auto;
+    line-height: 1.6;
+}
+
+.heroButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.primaryButton {
+    background-color: white;
+    color: #0d9488;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.secondaryButton {
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Problem Section */
+.problemSection {
+    padding: 5rem 0;
+    background-color: white;
+}
+
+.sectionContainer {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: clamp(2.5rem, 6vw, 3rem);
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.sectionDescription {
+    font-size: 1.25rem;
+    color: #4b5563;
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+.problemGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.problemCard {
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid;
+}
+
+.problemCardRed {
+    background: linear-gradient(to bottom, #fef2f2, #fee2e2);
+    border-color: #fecaca;
+}
+
+.problemCardOrange {
+    background: linear-gradient(to bottom, #fff7ed, #fed7aa);
+    border-color: #fdba74;
+}
+
+.problemCardYellow {
+    background: linear-gradient(to bottom, #fefce8, #fef3c7);
+    border-color: #fde047;
+}
+
+.iconContainer {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.iconContainerRed {
+    background-color: #ef4444;
+}
+
+.iconContainerOrange {
+    background-color: #f97316;
+}
+
+.iconContainerYellow {
+    background-color: #eab308;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.cardDescription {
+    color: #4b5563;
+}
+
+/* Features Section */
+.featuresSection {
+    padding: 5rem 0;
+    background: linear-gradient(to bottom, #f0fdfa, #cffafe);
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.featureCard {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.featureIconContainer {
+    width: 4rem;
+    height: 4rem;
+    background-color: #14b8a6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.featureTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+/* Target Section */
+.targetSection {
+    padding: 5rem 0;
+    background-color: white;
+}
+
+.targetGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
+    align-items: center;
+}
+
+.targetList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.targetItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.targetIconContainer {
+    width: 3rem;
+    height: 3rem;
+    background-color: #14b8a6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.targetItemTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.targetCard {
+    background: linear-gradient(135deg, #14b8a6, #06b6d4);
+    padding: 2rem;
+    border-radius: 1rem;
+    color: white;
+}
+
+.targetCardTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.targetCardList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.targetCardItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bullet {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: white;
+    border-radius: 50%;
+}
+
+/* CTA Section */
+.ctaSection {
+    padding: 5rem 0;
+    background: linear-gradient(to right, #14b8a6, #06b6d4);
+}
+
+.ctaContainer {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.ctaTitle {
+    font-size: clamp(2.5rem, 6vw, 3rem);
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.ctaDescription {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.emailForm {
+    max-width: 28rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.emailInput {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.emailButton {
+    background-color: white;
+    color: #0d9488;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.emailDisclaimer {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+/* Footer */
+.footer {
+    background-color: #111827;
+    color: white;
+    padding: 3rem 0;
+}
+
+.footerContainer {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footerLogo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.footerLogoText {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.footerText {
+    color: #9ca3af;
+    text-align: center;
+}
+
+.footerSubtext {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive */
+@media (min-width: 640px) {
+    .heroButtons {
+        flex-direction: row;
+    }
+    
+    .emailForm {
+        flex-direction: row;
+    }
+    
+    .footerContainer {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
