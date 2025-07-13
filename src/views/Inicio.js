@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BarChart3, TrendingUp, MapPin, Calendar, Bell, Smartphone, Users, Target, PieChart } from 'lucide-react';
 import '../styles/Inicio.css';
+import { Link } from "react-router-dom";
 const Inicio = () => {
   const [email, setEmail] = useState('');
 
@@ -11,6 +12,22 @@ const Inicio = () => {
     } else {
       alert('Por favor ingresa un correo válido');
     }
+  };
+
+  const hanldeLoginButtonHover = (e) => {
+    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+  };
+
+  const handleLoginButtonLeave = (e) => {
+    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+  };
+
+  const hanldeRegisterButtonHover = (e) => {
+    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+  };
+
+  const handleRegiterButtonLeave = (e) => {
+    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
   };
 
   const handleContactButtonHover = (e) => {
@@ -29,14 +46,6 @@ const Inicio = () => {
   const handlePrimaryButtonLeave = (e) => {
     e.target.style.backgroundColor = 'white';
     e.target.style.transform = 'scale(1)';
-  };
-
-  const handleSecondaryButtonHover = (e) => {
-    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-  };
-
-  const handleSecondaryButtonLeave = (e) => {
-    e.target.style.backgroundColor = 'transparent';
   };
 
   const handleFeatureCardHover = (e) => {
@@ -74,21 +83,24 @@ const Inicio = () => {
             Contacto
           </button>
 
-          {/* <button 
-            style={styles.contactButton}
-            onMouseEnter={}
-            onMouseLeave={}
-          >
-            Login 
-          </button>
+          <Link to="/login">
+            <button 
+              className='contactButton'
+              onMouseEnter={hanldeLoginButtonHover}
+              onMouseLeave={handleLoginButtonLeave}>
+              Login 
+            </button>
+          </Link>
 
-          <button 
-            style={styles.contactButton}
-            onMouseEnter={}
-            onMouseLeave={}
-          >
-            Registro 
-          </button> */}
+          <Link to="/register">
+            <button 
+              className='contactButton'
+              onMouseEnter={hanldeRegisterButtonHover}
+              onMouseLeave={handleRegiterButtonLeave}
+            >
+              Registro 
+            </button>
+          </Link>
         </nav>
       </header>
 

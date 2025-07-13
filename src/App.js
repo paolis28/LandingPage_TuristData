@@ -1,14 +1,11 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Inicio from './views/Inicio';
+import { BrowserRouter } from 'react-router-dom';
+import Rutas from './routes/pagina.routes';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-      </Routes>
-    </Router>
+    <BrowserRouter>
+      <Rutas/>
+    </BrowserRouter>
   );
 }
 
