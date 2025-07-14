@@ -1,0 +1,277 @@
+.dashboard-establishment-container {
+  display: flex;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #4ecdc4;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.edit-profile-btn {
+  background-color: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+  background-color: #264653;
+}
+
+.menu-sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.menu-item-sidebar {
+  background-color: #2a9d8f;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  font-weight: 500;
+}
+
+.menu-item-sidebar:hover {
+  background-color: #264653;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f5f5f5;
+  padding: 40px 60px;
+}
+
+.header {
+  margin-bottom: 60px;
+}
+
+.header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.establishment-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.create-establishment-card {
+  background-color: rgba(78, 205, 196, 0.1);
+  border: 2px dashed #4ecdc4;
+  border-radius: 16px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 300px;
+}
+
+.create-establishment-card:hover {
+  background-color: rgba(78, 205, 196, 0.2);
+  transform: translateY(-4px);
+}
+
+.plus-icon {
+  color: #4ecdc4;
+  margin-bottom: 20px;
+}
+
+.create-btn {
+  background-color: #4ecdc4;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-btn:hover {
+  background-color: #45b7b8;
+}
+
+.establishment-status {
+  background-color: rgba(78, 205, 196, 0.1);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.status-message {
+  margin-bottom: 30px;
+}
+
+.status-message h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.status-message p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.modify-btn {
+  background-color: #f39c12;
+  color: white;
+}
+
+.modify-btn:hover {
+  background-color: #d68910;
+}
+
+.eliminate-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.eliminate-btn:hover {
+  background-color: #c0392b;
+}
+
+.save-btn {
+  background-color: #4ecdc4;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #45b7b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-establishment-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .profile-section {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .menu-sidebar {
+    width: auto;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .menu-item-sidebar {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 36px;
+  }
+  
+  .create-establishment-card {
+    padding: 40px 20px;
+    min-width: 250px;
+  }
+  
+  .establishment-status {
+    padding: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .action-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+}
