@@ -48,7 +48,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/administrador', {
+      const response = await fetch('http://44.207.222.107:8000/api/administrador', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

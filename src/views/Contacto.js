@@ -50,7 +50,7 @@ export default function Contacto() {
       };
 
       // Aquí puedes cambiar la URL por tu endpoint de contacto
-      const response = await fetch('http://localhost:8000/api/contacto', {
+      const response = await fetch('http://44.207.222.107:8000/api/contacto', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
