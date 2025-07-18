@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/Panelestablecimiento.css';
 
 export default function PanelEstablecimiento() {
   const [userName] = useState('Alfredo');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showActionButtons, setShowActionButtons] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleEditProfile = () => {
     console.log('Editar perfil');
@@ -27,7 +29,7 @@ export default function PanelEstablecimiento() {
   };
 
   const handleCreateEstablishment = () => {
-    setShowCreateModal(true);
+    navigate('/crear'); 
   };
 
   const handleModify = () => {

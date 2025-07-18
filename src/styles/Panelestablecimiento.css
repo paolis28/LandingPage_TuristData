@@ -1,7 +1,9 @@
 .dashboard-establishment-container {
   display: flex;
   height: 100vh;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -11,6 +13,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh; /* 👈 Asegura altura completa */
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .profile-section {
@@ -81,6 +86,7 @@
   flex: 1;
   background-color: #f5f5f5;
   padding: 40px 60px;
+  overflow-y: auto; /* 👈 Permite scroll si el contenido crece */
 }
 
 .header {
@@ -215,61 +221,63 @@
 @media (max-width: 768px) {
   .dashboard-establishment-container {
     flex-direction: column;
+    height: auto;
   }
-  
+
   .sidebar {
     width: 100%;
     padding: 20px;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    height: auto;
   }
-  
+
   .profile-section {
     margin-bottom: 0;
     flex-shrink: 0;
   }
-  
+
   .profile-image {
     width: 80px;
     height: 80px;
     margin-bottom: 10px;
   }
-  
+
   .menu-sidebar {
     width: auto;
     flex-direction: row;
     gap: 10px;
     flex-wrap: wrap;
   }
-  
+
   .menu-item-sidebar {
     padding: 10px 15px;
     font-size: 12px;
   }
-  
+
   .main-content {
     padding: 20px;
   }
-  
+
   .header h1 {
     font-size: 36px;
   }
-  
+
   .create-establishment-card {
     padding: 40px 20px;
     min-width: 250px;
   }
-  
+
   .establishment-status {
     padding: 20px;
   }
-  
+
   .action-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .action-btn {
     width: 100%;
     max-width: 200px;
