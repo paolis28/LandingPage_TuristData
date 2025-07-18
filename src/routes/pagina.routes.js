@@ -6,18 +6,19 @@ import Contacto from '../views/Contacto';
 import PanelAdmin from '../views/panelAdmin';
 import PanelEstablecimiento from '../views/panel_establecimiento';
 import AvisoPrivacidad from '../views/avisoprivacidad';
-
-const Rutas = () => {
+const Rutas =() =>{
   return (
-    <Routes>
-      <Route path="/" element={<AvisoPrivacidad />} />
-      <Route path="/Inicio" element={<Inicio />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/contacto" element={<Contacto />} />
-      <Route path="/panel-admin" element={<PanelAdmin />} />   
-      <Route path="/dashestablecimiento" element={<PanelEstablecimiento />} />
-    </Routes>
+
+      <Routes>
+        <Route path="/" element={<AvisoPrivacidad />} />
+        <Route path="/Inicio" element={<Inicio />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/dashboard" element={<PanelAdmin />} />
+        <Route path="/dashestablecimiento" element={<PanelEstablecimiento />} />
+      </Routes>
+ 
   );
 }
 
