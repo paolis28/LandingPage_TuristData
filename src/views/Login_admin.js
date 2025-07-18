@@ -11,7 +11,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const [messageType, setMessageType] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,7 +25,6 @@ export default function Login() {
     e.preventDefault();
     setMessage('');
 
-    // Verificar que los campos estén completos
     if (!formData.email || !formData.password) {
       setMessage('Por favor, completa todos los campos');
       setMessageType('error');
@@ -49,14 +48,13 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
+        localStorage.setItem('token', data.token); 
         setMessage('¡Inicio de sesión exitoso!');
         setMessageType('success');
 
-     
         setTimeout(() => {
           navigate('/dashboard'); 
         }, 1500);
-
       } else {
         setMessage(data.message || 'Credenciales incorrectas');
         setMessageType('error');
