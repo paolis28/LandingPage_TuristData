@@ -19,6 +19,13 @@ export default function PanelCrear() {
       return;
     }
 
+    const token = localStorage.getItem('token'); 
+
+    if (!token) {
+      setMensaje(' No se encontró el token de autenticación');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('nombre', nombreLugar);
     formData.append('direccion', direccion);
@@ -32,6 +39,9 @@ export default function PanelCrear() {
     try {
       const response = await fetch('https://turistdata-back.onrender.com/api/establecimientos/rg', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -57,7 +67,7 @@ export default function PanelCrear() {
 
   const handleEliminate = () => {
     console.log('Eliminar establecimiento');
-    setMensaje('🗑️ Función de eliminación aún no implementada');
+    setMensaje('Función de eliminación aún no implementada');
   };
 
   const limpiarCampos = () => {
