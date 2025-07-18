@@ -54,7 +54,7 @@ export default function Login() {
 
      
         setTimeout(() => {
-          navigate('/panel-admin'); 
+          navigate('/dashboard'); 
         }, 1500);
 
       } else {
