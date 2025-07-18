@@ -1,33 +1,32 @@
-import React, { useState, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useState } from 'react';
 import '../styles/Register.css';
-import Logo from "../resources/img/logo_intergrador.png"
-import { Link } from "react-router-dom";
+import Logo from "../resources/img/logo_intergrador.png";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.values
-
+      [e.target.name]: e.target.value 
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-    
-    // Verificar que todos los campos estén llenos
-    if (!formData.establecimiento || !formData.email || !formData.password) {
+
+    // Verificar que los campos estén completos
+    if (!formData.email || !formData.password) {
       setMessage('Por favor, completa todos los campos');
       setMessageType('error');
       return;
@@ -36,34 +35,30 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/administrador/login', {
+      const response = await fetch('https://turistdata-back.onrender.com/api/administrador/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           correo: formData.email,
-          password: formData.password,
-        //   recaptcha: captchaValue // Enviar el token de reCAPTCHA al backend
+          password: formData.password
         })
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Registro exitoso!');
+        setMessage('¡Inicio de sesión exitoso!');
         setMessageType('success');
-        
-        // Limpiar formulario
-        setFormData({
-          establecimiento: '',
-          email: '',
-          password: ''
-        });
-        
-        
+
+     
+        setTimeout(() => {
+          navigate('/panel-admin'); 
+        }, 1500);
+
       } else {
-        setMessage(data.message || 'Error en el registro');
+        setMessage(data.message || 'Credenciales incorrectas');
         setMessageType('error');
       }
     } catch (error) {
@@ -75,20 +70,19 @@ export default function Login() {
     }
   };
 
-
   return (
     <div className="register-container">
       <div className="register-form">
         <h1>Login</h1>
-        
-        <div>
+
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Correo electrónico</label>
             <input
               type="email"
               id="email"
               name="email"
-              placeholder="introduce correo"
+              placeholder="Introduce correo"
               value={formData.email}
               onChange={handleChange}
               required
@@ -101,14 +95,13 @@ export default function Login() {
               type="password"
               id="password"
               name="password"
-              placeholder="introduce contraseña"
+              placeholder="Introduce contraseña"
               value={formData.password}
               onChange={handleChange}
               required
             />
           </div>
 
-          {/* Mensaje de estado */}
           {message && (
             <div className={`message ${messageType}`}>
               {message}
@@ -123,20 +116,16 @@ export default function Login() {
           <button 
             type="submit" 
             className="register-btn" 
-            onClick={handleSubmit}
             disabled={loading}
           >
-            {loading ? 'Registrando...' : 'Entrar'}
+            {loading ? 'Ingresando...' : 'Entrar'}
           </button>
 
-                    
-          <Link to="/register">
-            <div className="login-link">
-                <span>¿Eres nuevo usuario? </span>
-                <a href="#" onClick={(e) => e.preventDefault()}>Registrate</a>
-            </div>
-          </Link>
-        </div>
+          <div className="login-link">
+            <span>¿Eres nuevo usuario? </span>
+            <Link to="/register">Regístrate</Link>
+          </div>
+        </form>
       </div>
 
       <div className="welcome-section">
@@ -144,7 +133,7 @@ export default function Login() {
         <div className="illustration">
           <div className="illustration-circle">
             <div className="character">
-              <img className='logoregis' src={Logo} alt="Character Illustration" />
+              <img className="logoregis" src={Logo} alt="Character Illustration" />
             </div>
           </div>
         </div>

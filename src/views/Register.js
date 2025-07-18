@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import ReCAPTCHA from 'react-google-recaptcha';
 import '../styles/Register.css';
-import Logo from "../resources/img/logo_intergrador.png"
+import Logo from "../resources/img/logo_intergrador.png";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -9,35 +10,32 @@ export default function Register() {
     email: '',
     password: ''
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const recaptchaRef = useRef();
+  const navigate = useNavigate(); // React Router hook
 
-  // Reemplaza esta clave con tu clave de sitio de reCAPTCHA
   const RECAPTCHA_SITE_KEY = "6LflXIErAAAAAFqalpnpHnyfNp0gjQ0hztTT8DFr";
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.values
-
+      [e.target.name]: e.target.value // CORREGIDO
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-    
-    // Verificar que todos los campos estén llenos
+
     if (!formData.establecimiento || !formData.email || !formData.password) {
       setMessage('Por favor, completa todos los campos');
       setMessageType('error');
       return;
     }
 
-    // Verificar reCAPTCHA
     const captchaValue = recaptchaRef.current.getValue();
     if (!captchaValue) {
       setMessage('Por favor, completa el reCAPTCHA');
@@ -48,40 +46,34 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/administrador', {
+      const response = await fetch('https://turistdata-back.onrender.com/api/administrador', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           nombre: formData.establecimiento,
           correo: formData.email,
-          password: formData.password,
-        //   recaptcha: captchaValue // Enviar el token de reCAPTCHA al backend
+          password: formData.password
         })
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMessage('Registro exitoso!');
+        setMessage('¡Registro exitoso!');
         setMessageType('success');
-        
-        // Limpiar formulario
+
         setFormData({
           establecimiento: '',
           email: '',
           password: ''
         });
-        
-        // Resetear reCAPTCHA
         recaptchaRef.current.reset();
-        
-        // Opcional: redirigir después del registro exitoso
-        // setTimeout(() => {
-        //   window.location.href = '/login';
-        // }, 2000);
-        
+
+       
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+
       } else {
         setMessage(data.message || 'Error en el registro');
         setMessageType('error');
@@ -105,7 +97,6 @@ export default function Register() {
     <div className="register-container">
       <div className="register-form">
         <h1>Register</h1>
-        
         <div>
           <div className="form-group">
             <label htmlFor="establecimiento">Nombre del Establecimiento</label>
@@ -126,7 +117,7 @@ export default function Register() {
               type="email"
               id="email"
               name="email"
-              placeholder="introduce correo"
+              placeholder="Introduce correo"
               value={formData.email}
               onChange={handleChange}
               required
@@ -139,14 +130,13 @@ export default function Register() {
               type="password"
               id="password"
               name="password"
-              placeholder="introduce contraseña"
+              placeholder="Introduce contraseña"
               value={formData.password}
               onChange={handleChange}
               required
             />
           </div>
 
-          {/* reCAPTCHA */}
           <div className="recaptcha-container">
             <ReCAPTCHA
               ref={recaptchaRef}
@@ -155,7 +145,6 @@ export default function Register() {
             />
           </div>
 
-          {/* Mensaje de estado */}
           {message && (
             <div className={`message ${messageType}`}>
               {message}
@@ -164,7 +153,12 @@ export default function Register() {
 
           <div className="login-link">
             <span>¿Tienes cuenta? </span>
-            <a href="#" onClick={(e) => e.preventDefault()}>Inicia Sesión</a>
+            <a href="#" onClick={(e) => {
+              e.preventDefault();
+              navigate('/login'); 
+            }}>
+              Inicia Sesión
+            </a>
           </div>
 
           <button 
@@ -179,11 +173,11 @@ export default function Register() {
       </div>
 
       <div className="welcome-section">
-        <h2>Bienvenido!</h2>
+        <h2>¡Bienvenido!</h2>
         <div className="illustration">
           <div className="illustration-circle">
             <div className="character">
-              <img className='logoregis' src={Logo} alt="Character Illustration" />
+              <img className="logoregis" src={Logo} alt="Character Illustration" />
             </div>
           </div>
         </div>
