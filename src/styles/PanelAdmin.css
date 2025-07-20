@@ -1,37 +1,61 @@
-/* Panel administrador.css */
+/* PanelAdmin.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(to right, #009AAD, #00cfc2);
+}
+
 .dashboard-container {
   display: flex;
   height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #333;
 }
 
+/* Sidebar */
 .sidebar {
-  width: 300px;
-  background-color: #4ecdc4;
-  padding: 40px 30px;
+  width: 280px;
+ background: linear-gradient(to bottom, #00b4c0, #00cfc2);
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .profile-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  text-align: center;
 }
 
 .profile-image {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(to bottom right, #00cfc2, #009AAD);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+ /*.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
   overflow: hidden;
 }
+*/
 
 .profile-image img {
   width: 100%;
@@ -41,10 +65,10 @@
 }
 
 .edit-profile-btn {
-  background-color: #2a9d8f;
+  background-color: #006d80;
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 10px 24px;
   border-radius: 25px;
   font-size: 14px;
   font-weight: 600;
@@ -53,62 +77,66 @@
 }
 
 .edit-profile-btn:hover {
-  background-color: #264653;
+  background-color: #004e59;
 }
 
+/* Main Content */
 .main-content {
   flex: 1;
-  background-color: #f5f5f5;
-  padding: 40px 60px;
+  padding: 50px 60px;
+  background: linear-gradient(to right, #009AAD, #00cfc2);
 }
 
 .header {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .header h1 {
-  font-size: 48px;
-  font-weight: 700;
-  color: #333;
+  font-size: 42px;
   margin: 0;
+  color: #ffffff;
 }
 
+.header p {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #e0f7fa;
+}
+
+/* Menu Options */
 .menu-options {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 400px;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
 }
 
 .menu-item {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
+  background: linear-gradient(to bottom right, #F4FCF9, #CFFFFF);
+
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid #e0e0e0;
 }
 
 .menu-item:hover {
-  background-color: #f8f9fa;
-  border-color: #4ecdc4;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
 }
 
 .menu-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px;
-  color: #666;
+  font-size: 36px;
+  margin-bottom: 12px;
+  color: #006d80;
 }
 
 .menu-item span {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00303f;
 }
 
 /* Responsive */
@@ -116,34 +144,25 @@
   .dashboard-container {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
     padding: 20px;
     flex-direction: row;
     justify-content: center;
+    
   }
-  
-  .profile-section {
-    margin-bottom: 0;
-    margin-right: 20px;
-  }
-  
-  .profile-image {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-  }
-  
+
   .main-content {
-    padding: 20px;
+    padding: 30px 20px;
   }
-  
+
   .header h1 {
-    font-size: 36px;
+    font-size: 28px;
   }
-  
+
   .menu-options {
-    max-width: 100%;
+    grid-template-columns: 1fr;
   }
 }
+
