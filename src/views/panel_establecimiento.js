@@ -18,6 +18,7 @@ export default function PanelEstablecimiento() {
 
   const handleViewEstablishment = () => {
     console.log('Ver establecimiento');
+    navigate('/verestablecimiento');
   };
 
   const handleCloseSession = () => {

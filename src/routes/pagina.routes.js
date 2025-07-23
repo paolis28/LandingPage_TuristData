@@ -7,7 +7,7 @@ import PanelAdmin from '../views/PanelAdmin';
 import PanelEstablecimiento from '../views/panel_establecimiento';
 import AvisoPrivacidad from '../views/avisoprivacidad';
 import PanelCrear from '../views/panel_crear'; 
-
+import PanelVerEstablecimiento from '../views/panelVer_establecimiento';
 const Rutas = () => {
   return (
     <Routes>
@@ -19,6 +19,7 @@ const Rutas = () => {
       <Route path="/dashboard" element={<PanelAdmin />} />
       <Route path="/dashestablecimiento" element={<PanelEstablecimiento />} />
       <Route path="/crear" element={<PanelCrear />} /> 
+      <Route path="/verestablecimiento" element={<PanelVerEstablecimiento />} /> 
     </Routes>
   );
 };
