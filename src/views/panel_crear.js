@@ -8,13 +8,11 @@ export default function PanelCrear() {
   const [ciudad, setCiudad] = useState('');
   const [tipo, setTipo] = useState('');
   const [estado, setEstado] = useState('');
-  const [horario, setHorario] = useState('');
+  const [horarioApertura, setHorarioApertura] = useState('');
+  const [horarioCierre, setHorarioCierre] = useState('');
   const [precio, setPrecio] = useState('');
   const [imagenFile, setImagenFile] = useState(null);
   const [mensaje, setMensaje] = useState('');
-  const [horarioApertura, setHorarioApertura] = useState('');
-const [horarioCierre, setHorarioCierre] = useState('');
-
 
   const handleAddEstablishment = async () => {
     if (!imagenFile) {
@@ -22,7 +20,7 @@ const [horarioCierre, setHorarioCierre] = useState('');
       return;
     }
 
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token');
     if (!token) {
       setMensaje('No se encontró el token de autenticación');
       return;
@@ -34,16 +32,16 @@ const [horarioCierre, setHorarioCierre] = useState('');
     formData.append('ciudad', ciudad);
     formData.append('tipo', tipo);
     formData.append('estado', estado);
-    formData.append('horario', horario);
+    formData.append('horario', `${horarioApertura} - ${horarioCierre}`);
     formData.append('precio', precio);
     formData.append('imagen', imagenFile);
-    formData.append('horario', `${horarioApertura} - ${horarioCierre}`);
-
 
     try {
       const response = await fetch('https://turistdata-back.onrender.com/api/establecimientos/rg', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -53,8 +51,8 @@ const [horarioCierre, setHorarioCierre] = useState('');
         setMensaje('Establecimiento registrado con éxito');
         limpiarCampos();
       } else {
-        const errorData = await response.json();
-        console.error('Error al registrar:', errorData);
+        const errorText = await response.text();
+        console.error('Error al registrar:', errorText);
         setMensaje('Error al registrar el establecimiento');
       }
     } catch (error) {
@@ -73,7 +71,8 @@ const [horarioCierre, setHorarioCierre] = useState('');
     setCiudad('');
     setTipo('');
     setEstado('');
-    setHorario('');
+    setHorarioApertura('');
+    setHorarioCierre('');
     setPrecio('');
     setImagenFile(null);
   };
@@ -133,46 +132,35 @@ const [horarioCierre, setHorarioCierre] = useState('');
             </select>
           </div>
 
-                <div className="form-group">
-          <label>Horario de apertura:</label>
-          <input
-            type="time"
-            value={horarioApertura}
-            onChange={(e) => setHorarioApertura(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label>Horario de apertura:</label>
+            <input type="time" value={horarioApertura} onChange={(e) => setHorarioApertura(e.target.value)} />
+          </div>
 
-        <div className="form-group">
-          <label>Horario de cierre:</label>
-          <input
-            type="time"
-            value={horarioCierre}
-            onChange={(e) => setHorarioCierre(e.target.value)}
-          />
-        </div>
+          <div className="form-group">
+            <label>Horario de cierre:</label>
+            <input type="time" value={horarioCierre} onChange={(e) => setHorarioCierre(e.target.value)} />
+          </div>
 
-
-      <div className="form-group">
-        <label>Precio promedio (MXN):</label>
-        <input
-          type="range"
-          min="0"
-          max="1000"
-          step="1"
-          value={Math.floor(precio)}
-          onChange={(e) => setPrecio(e.target.value)}
-        />
-        <input
-          type="number"
-          step="0.01"
-          value={precio}
-          onChange={(e) => setPrecio(e.target.value)}
-          style={{ marginTop: '10px', width: '100%' }}
-        />
-        <p> {parseFloat(precio).toFixed(2)} MXN</p>
-      </div>
-
-
+          <div className="form-group">
+            <label>Precio promedio (MXN):</label>
+            <input
+              type="range"
+              min="0"
+              max="1000"
+              step="1"
+              value={Math.floor(precio)}
+              onChange={(e) => setPrecio(e.target.value)}
+            />
+            <input
+              type="number"
+              step="0.01"
+              value={precio}
+              onChange={(e) => setPrecio(e.target.value)}
+              style={{ marginTop: '10px', width: '100%' }}
+            />
+            <p>{parseFloat(precio).toFixed(2)} MXN</p>
+          </div>
 
           <div className="form-group">
             <label>Imagen:</label>
