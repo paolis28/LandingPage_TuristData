@@ -36,7 +36,8 @@ const PanelVerEstablecimiento = () => {
         return response.json();
       })
       .then(data => {
-        setEstablishments(data.establecimientos || []); // ajusta según respuesta
+        //setEstablishments(data.establecimientos || []); // ajusta según respuesta
+        setEstablishments(Array.isArray(data) ? data : data.establecimientos || []);
         setLoading(false);
       })
       .catch(err => {
