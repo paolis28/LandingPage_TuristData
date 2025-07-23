@@ -133,16 +133,18 @@ const PanelVerEstablecimiento = () => {
               }}
             >
               <div className="establishment-image-wrapper">
-                {/* <img 
+                <img 
                   src={establishment.imagen}
                   alt={establishment.nombre}
                   className="establishment-image"
-                /> */}
-                <img 
+                />
+                {/* <img src={establecimiento.imagen} /> */}
+
+                {/* <img 
                   src={`https://turistdata-back.onrender.com/uploads/admin_${establishment.id_administrador}/${establishment.imagen}`}
                   alt={establishment.nombre}
                   className="establishment-image"
-                />
+                /> */}
                 <div className="establishment-type">
                   {establishment.tipo}
                 </div>
