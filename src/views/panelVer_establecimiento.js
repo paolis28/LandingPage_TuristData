@@ -11,10 +11,24 @@ const PanelVerEstablecimiento = () => {
   const [filterType, setFilterType] = useState('Todos');
 
   useEffect(() => {
+    const token = localStorage.getItem('token'); // o donde lo guardes
+
+    if (!token) {
+      setError('No hay token de autenticación');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    fetch('https://turistdata-back.onrender.com/api/establecimientos/admin')
+    fetch('https://turistdata-back.onrender.com/api/establecimientos/admin', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -22,10 +36,7 @@ const PanelVerEstablecimiento = () => {
         return response.json();
       })
       .then(data => {
-        // Ajusta según la estructura de tu respuesta
-        // Si tu API devuelve { establecimientos: [...] } entonces:
-        setEstablishments(data.establecimientos);
-        //setEstablishments(data);  // O cambia según respuesta real
+        setEstablishments(data.establecimientos || []); // ajusta según respuesta
         setLoading(false);
       })
       .catch(err => {
@@ -33,6 +44,7 @@ const PanelVerEstablecimiento = () => {
         setLoading(false);
       });
   }, []);
+
 
   // Filtrado igual
   const filteredEstablishments = establishments.filter(est => {
