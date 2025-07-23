@@ -1,61 +1,37 @@
-/* PanelAdmin.css */
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(to right, #009AAD, #00cfc2);
-}
-
+/* Panel administrador.css */
 .dashboard-container {
   display: flex;
   height: 100vh;
-  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-/* Sidebar */
 .sidebar {
-  width: 280px;
- background: linear-gradient(to bottom, #00b4c0, #00cfc2);
-  padding: 40px 20px;
+  width: 300px;
+  background-color: #4ecdc4;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .profile-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  margin-bottom: 40px;
 }
 
 .profile-image {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: linear-gradient(to bottom right, #00cfc2, #009AAD);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-
- /*.profile-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
   overflow: hidden;
 }
-*/
 
 .profile-image img {
   width: 100%;
@@ -65,10 +41,10 @@ body {
 }
 
 .edit-profile-btn {
-  background-color: #006d80;
+  background-color: #2a9d8f;
   color: white;
   border: none;
-  padding: 10px 24px;
+  padding: 12px 24px;
   border-radius: 25px;
   font-size: 14px;
   font-weight: 600;
@@ -77,66 +53,62 @@ body {
 }
 
 .edit-profile-btn:hover {
-  background-color: #004e59;
+  background-color: #264653;
 }
 
-/* Main Content */
 .main-content {
   flex: 1;
-  padding: 50px 60px;
-  background: linear-gradient(to right, #009AAD, #00cfc2);
+  background-color: #f5f5f5;
+  padding: 40px 60px;
 }
 
 .header {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .header h1 {
-  font-size: 42px;
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
   margin: 0;
-  color: #ffffff;
 }
 
-.header p {
-  font-size: 18px;
-  margin-top: 10px;
-  color: #e0f7fa;
-}
-
-/* Menu Options */
 .menu-options {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 400px;
 }
 
 .menu-item {
-  background: linear-gradient(to bottom right, #F4FCF9, #CFFFFF);
-
-  border-radius: 20px;
-  padding: 32px 24px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
 }
 
 .menu-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  background-color: #f8f9fa;
+  border-color: #4ecdc4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .menu-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
-  color: #006d80;
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  color: #666;
 }
 
 .menu-item span {
-  font-size: 18px;
-  font-weight: 600;
-  color: #00303f;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
 }
 
 /* Responsive */
@@ -144,25 +116,34 @@ body {
   .dashboard-container {
     flex-direction: column;
   }
-
+  
   .sidebar {
     width: 100%;
     padding: 20px;
     flex-direction: row;
     justify-content: center;
-    
   }
-
+  
+  .profile-section {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+  
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
   .main-content {
-    padding: 30px 20px;
+    padding: 20px;
   }
-
+  
   .header h1 {
-    font-size: 28px;
+    font-size: 36px;
   }
-
+  
   .menu-options {
-    grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
-
