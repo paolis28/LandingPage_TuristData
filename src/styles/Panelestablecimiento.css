@@ -10,21 +10,23 @@
 
 
 .header h1::before {
-  content: "🌄 ";
+  
   margin-right: 8px;
 }
 
 .sidebar {
-  width: 300px;
-  background-color: #4ecdc4;
-  padding: 40px 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #40e0d0, #1cb5a6);
+  padding: 30px 0;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  box-sizing: border-box;
-  flex-shrink: 0;
 }
+
 
 .profile-section {
   display: flex;
@@ -117,27 +119,31 @@
 }
 
 .create-establishment-card {
-  background-color: #006d80;
-  border: 2px dashed #4ecdc4;
-  border-radius: 16px;
-  padding: 60px;
+  background: linear-gradient(to bottom right, #00787f, #004e51);
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 320px;
+  color: white;
 }
 
 .create-establishment-card:hover {
-  background-color: rgba(78, 205, 196, 0.2);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .plus-icon {
   color: #4ecdc4;
+  font-size: 48px;
   margin-bottom: 20px;
 }
+
 
 .create-btn {
   background-color: #4ecdc4;
@@ -158,13 +164,16 @@
 }
 
 .establishment-status {
-  background-color: #006d80;
-  border-radius: 16px;
+  background: linear-gradient(to bottom right, #004e51, #00787f);
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   padding: 40px;
   text-align: center;
-  max-width: 600px;
+  max-width: 640px;
   width: 100%;
 }
+
 
 .status-message {
   margin-bottom: 30px;
@@ -392,4 +401,59 @@ input[type="time"]:focus {
   outline: none;
   border-color: #aee6ea;
   box-shadow: 0 0 0 4px rgba(255, 165, 89, 0.2);
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #40e0d0, #1cb5a6);
+  padding: 30px 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 0 25px;
+  margin-bottom: 40px;
+}
+
+.sidebar-header h2 {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-btn {
+  width: 230px;
+  margin: 8px 25px;
+  padding: 15px 20px;
+  background-color: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.sidebar-btn:hover {
+  background-color: rgba(255,255,255,0.4);
+}
+
+.sidebar-btn.active {
+  background-color: rgba(255,255,255,0.9);
+  color: #1cb5a6;
+  font-weight: bold;
+  cursor: default;
 }

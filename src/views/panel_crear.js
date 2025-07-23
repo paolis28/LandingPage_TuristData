@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Panelestablecimiento.css';
 
 export default function PanelCrear() {
@@ -13,6 +14,10 @@ export default function PanelCrear() {
   const [precio, setPrecio] = useState('');
   const [imagenFile, setImagenFile] = useState(null);
   const [mensaje, setMensaje] = useState('');
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
 
   const handleAddEstablishment = async () => {
     if (!imagenFile) {
@@ -80,16 +85,32 @@ export default function PanelCrear() {
   return (
     <div className="dashboard-establishment-container">
       <div className="sidebar">
-        <div className="profile-section">
+        <div className="sidebar-header">
           <h2>Hola {userName}</h2>
         </div>
 
-        <div className="menu-sidebar">
-          <div className="menu-item-sidebar"><span>Agregar establecimiento</span></div>
-          <div className="menu-item-sidebar"><span>Ver Establecimiento</span></div>
-          <div className="menu-item-sidebar"><span>Perfil</span></div>
-          <div className="menu-item-sidebar"><span>Cerrar sesión</span></div>
-          <div className="menu-item-sidebar"><span>Acerca de</span></div>
+        <div className="sidebar-nav">
+          <button
+            className={`sidebar-btn ${isActive('/crear') ? 'active' : ''}`}
+            onClick={() => navigate('/crear')}
+          >
+            Agregar establecimiento
+          </button>
+          <button
+            className={`sidebar-btn ${isActive('/verestablecimiento') ? 'active' : ''}`}
+            onClick={() => navigate('/verestablecimiento')}
+          >
+            Ver Establecimiento
+          </button>
+          <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
+            Perfil
+          </button>
+          <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
+            Cerrar sesión
+          </button>
+          <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
+            Acerca de
+          </button>
         </div>
       </div>
 
