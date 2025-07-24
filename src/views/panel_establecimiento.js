@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Panelestablecimiento.css';
 
 export default function PanelEstablecimiento() {
-  const [userName] = useState('Alfredo');
+  const [email, setEmail] = useState('');
   const navigate = useNavigate();
-  const location = useLocation(); // para manejar el estado activo dinámico
+  const location = useLocation();
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('userData');
+    if (storedData) {
+      try {
+        const parsedData = JSON.parse(storedData);
+        if (parsedData.email) {
+          setEmail(parsedData.email);
+        } else {
+          console.warn('No se encontró la propiedad "email" en userData');
+        }
+      } catch (error) {
+        console.error('Error al parsear userData:', error);
+      }
+    } else {
+      console.warn('No se encontró userData en localStorage');
+    }
+  }, []);
 
   const isActive = (path) => location.pathname === path;
 
@@ -13,7 +31,7 @@ export default function PanelEstablecimiento() {
     <div className="dashboard-establishment-container">
       <div className="sidebar">
         <div className="sidebar-header">
-          <h2>Hola {userName}</h2>
+          <h2>Hola {email || 'Usuario'}</h2>
         </div>
 
         <div className="sidebar-nav">
@@ -32,7 +50,13 @@ export default function PanelEstablecimiento() {
           <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
             Perfil
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
+          <button
+            className="sidebar-btn"
+            onClick={() => {
+              localStorage.removeItem('userData');
+              navigate('/');
+            }}
+          >
             Cerrar sesión
           </button>
           <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
@@ -42,10 +66,6 @@ export default function PanelEstablecimiento() {
       </div>
 
       <div className="main-content">
-        <div className="header">
-          <h1>🌄 Hola {userName}</h1>
-        </div>
-
         <div className="establishment-section">
           <div className="create-establishment-card" onClick={() => navigate('/crear')}>
             <div className="plus-icon">

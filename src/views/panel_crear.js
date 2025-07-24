@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // agrega useEffect
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Panelestablecimiento.css';
 
 export default function PanelCrear() {
-  const [userName] = useState('Alfredo');
+  const [email, setEmail] = useState(''); // para almacenar correo usuario
   const [nombreLugar, setNombreLugar] = useState('');
   const [direccion, setDireccion] = useState('');
   const [ciudad, setCiudad] = useState('');
@@ -18,6 +18,15 @@ export default function PanelCrear() {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
+
+  // Leer el correo del usuario desde localStorage al montar el componente
+  useEffect(() => {
+    const userDataStr = localStorage.getItem('userData');
+    if (userDataStr) {
+      const userData = JSON.parse(userDataStr);
+      if (userData.email) setEmail(userData.email);
+    }
+  }, []);
 
   const handleAddEstablishment = async () => {
     if (!imagenFile) {
@@ -35,8 +44,8 @@ export default function PanelCrear() {
     formData.append('nombre', nombreLugar);
     formData.append('direccion', direccion);
     formData.append('ciudad', ciudad);
-    formData.append('tipo', tipo);
     formData.append('estado', estado);
+    formData.append('tipo', tipo);
     formData.append('horario', `${horarioApertura} - ${horarioCierre}`);
     formData.append('precio', precio);
     formData.append('imagen', imagenFile);
@@ -86,7 +95,7 @@ export default function PanelCrear() {
     <div className="dashboard-establishment-container">
       <div className="sidebar">
         <div className="sidebar-header">
-          <h2>Hola {userName}</h2>
+          <h2>Hola {email}</h2> {/* Muestra el correo aquí */}
         </div>
 
         <div className="sidebar-nav">
@@ -122,6 +131,8 @@ export default function PanelCrear() {
 
         <div className="form-card">
           <h2>Registrar Establecimiento</h2>
+
+          {/* Resto del formulario sin cambios */}
 
           <div className="form-group">
             <label>Nombre del lugar:</label>

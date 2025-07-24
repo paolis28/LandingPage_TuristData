@@ -3,12 +3,26 @@ import { Search, MapPin, Edit3, Trash2, Eye } from 'lucide-react';
 import '../styles/Panelverestablecimiento.css';
 
 const PanelVerEstablecimiento = () => {
+  const [email, setEmail] = useState(''); // estado para el correo
   const [establishments, setEstablishments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('Todos');
+
+  useEffect(() => {
+    // Leer correo de usuario del localStorage al montar
+    const userDataStr = localStorage.getItem('userData');
+    if (userDataStr) {
+      try {
+        const userData = JSON.parse(userDataStr);
+        if (userData.email) setEmail(userData.email);
+      } catch (e) {
+        console.error('Error parsing userData from localStorage:', e);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token'); // o donde lo guardes
@@ -25,7 +39,7 @@ const PanelVerEstablecimiento = () => {
     fetch('https://turistdata-back.onrender.com/api/establecimientos/admin', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     })
@@ -36,7 +50,6 @@ const PanelVerEstablecimiento = () => {
         return response.json();
       })
       .then(data => {
-        //setEstablishments(data.establecimientos || []); // ajusta según respuesta
         setEstablishments(Array.isArray(data) ? data : data.establecimientos || []);
         setLoading(false);
       })
@@ -46,11 +59,10 @@ const PanelVerEstablecimiento = () => {
       });
   }, []);
 
-
-  // Filtrado igual
   const filteredEstablishments = establishments.filter(est => {
-    const matchesSearch = est.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          est.ciudad?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      est.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      est.ciudad?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = filterType === 'Todos' || est.tipo === filterType;
     return matchesSearch && matchesType;
   });
@@ -64,11 +76,12 @@ const PanelVerEstablecimiento = () => {
   if (error) {
     return <div className="error">Error al cargar establecimientos: {error}</div>;
   }
+
   return (
     <div className="container">
       <aside className="sidebar">
         <div className="sidebar-header">
-          <h2>Hola Alfredo</h2>
+          <h2>Hola {email}</h2> {/* Aquí mostramos el correo del usuario */}
         </div>
         <nav className="sidebar-nav">
           <button className="sidebar-btn">Agregar establecimiento</button>
@@ -122,32 +135,19 @@ const PanelVerEstablecimiento = () => {
 
         <section className="establishments-grid">
           {filteredEstablishments.map(establishment => (
-            <div 
+            <div
               key={establishment.id}
               className="establishment-card"
-              onMouseEnter={(e) => {
-                e.currentTarget.classList.add('hovered');
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.classList.remove('hovered');
-              }}
+              onMouseEnter={(e) => e.currentTarget.classList.add('hovered')}
+              onMouseLeave={(e) => e.currentTarget.classList.remove('hovered')}
             >
               <div className="establishment-image-wrapper">
-                <img 
+                <img
                   src={establishment.imagen}
                   alt={establishment.nombre}
                   className="establishment-image"
                 />
-                {/* <img src={establecimiento.imagen} /> */}
-
-                {/* <img 
-                  src={`https://turistdata-back.onrender.com/uploads/admin_${establishment.id_administrador}/${establishment.imagen}`}
-                  alt={establishment.nombre}
-                  className="establishment-image"
-                /> */}
-                <div className="establishment-type">
-                  {establishment.tipo}
-                </div>
+                <div className="establishment-type">{establishment.tipo}</div>
               </div>
 
               <div className="establishment-content">
@@ -159,6 +159,7 @@ const PanelVerEstablecimiento = () => {
                 </div>
 
                 <p className="establishment-city">{establishment.ciudad}</p>
+                <p className="establishment-city">{establishment.estado}</p>
 
                 <p className="establishment-description">{establishment.descripcion}</p>
 

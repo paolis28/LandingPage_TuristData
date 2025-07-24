@@ -48,7 +48,12 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token); 
+        // Guarda el token y el correo juntos en un objeto JSON en localStorage
+        localStorage.setItem('userData', JSON.stringify({
+          token: data.token,
+          email: formData.email
+        }));
+
         setMessage('¡Inicio de sesión exitoso!');
         setMessageType('success');
 
