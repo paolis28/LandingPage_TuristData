@@ -1,0 +1,360 @@
+/* Mantener los estilos existentes del sidebar y base */
+.dashboard-establishment-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow: hidden;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(135deg, #40e0d0, #1cb5a6);
+  padding: 30px 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-btn {
+  width: 230px;
+  margin: 8px 25px;
+  padding: 15px 20px;
+  background-color: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.sidebar-btn:hover {
+  background-color: rgba(255,255,255,0.4);
+}
+
+.sidebar-btn.active {
+  background-color: rgba(255,255,255,0.9);
+  color: #1cb5a6;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #f5f5f5;
+  padding: 40px 60px;
+  margin-left: 280px;
+  overflow-y: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.header p {
+  font-size: 18px;
+  color: #666;
+  margin: 10px 0 0 0;
+}
+
+/* Nuevos estilos para las cards en fila */
+.cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.form-card {
+  background: linear-gradient(to bottom right, #F4FCF9, #E0F9F6);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.form-card.card-completed {
+  background: linear-gradient(to bottom right, #E8F5E8, #D4F1D4);
+  border-color: #4CAF50;
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2);
+}
+
+.form-card h2 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #006d80;
+  border-bottom: 2px solid #4ecdc4;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.card-completed h2 {
+  color: #2E7D32;
+  border-bottom-color: #4CAF50;
+}
+
+/* Card para evento especial (más grande) */
+.event-card {
+  max-width: none;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  color: #264653;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cdeff0;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #009AAD;
+  box-shadow: 0 0 0 3px rgba(0, 154, 173, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.create-btn {
+  background: linear-gradient(to right, #00b4c0, #009AAD);
+  color: white;
+  font-size: 16px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.create-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.create-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.reset-btn {
+  background: linear-gradient(to right, #e74c3c, #c0392b);
+  color: white;
+  font-size: 16px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.reset-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.reset-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+/* Información de elementos completados */
+.completed-info {
+  background-color: rgba(76, 175, 80, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 4px solid #4CAF50;
+}
+
+.completed-info p {
+  margin: 8px 0;
+  color: #2E7D32;
+  font-weight: 500;
+}
+
+.completed-info strong {
+  color: #1B5E20;
+}
+
+/* Mensajes de estado */
+.mensaje {
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+.mensaje.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.mensaje.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .main-content {
+    padding: 30px 40px;
+  }
+  
+  .cards-row {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-establishment-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .sidebar-btn {
+    width: auto;
+    margin: 5px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 36px;
+  }
+
+  .cards-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-card h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .form-card {
+    padding: 15px;
+  }
+
+  .button-group {
+    gap: 8px;
+  }
+
+  .create-btn, .reset-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}

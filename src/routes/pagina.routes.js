@@ -8,6 +8,7 @@ import PanelEstablecimiento from '../views/panel_establecimiento';
 import AvisoPrivacidad from '../views/avisoprivacidad';
 import PanelCrear from '../views/panel_crear'; 
 import PanelVerEstablecimiento from '../views/panelVer_establecimiento';
+import PanelEventosEspeciales from '../views/Panel_eventosespeciales';
 const Rutas = () => {
   return (
     <Routes>
@@ -20,6 +21,7 @@ const Rutas = () => {
       <Route path="/dashestablecimiento" element={<PanelEstablecimiento />} />
       <Route path="/crear" element={<PanelCrear />} /> 
       <Route path="/verestablecimiento" element={<PanelVerEstablecimiento />} /> 
+      <Route path="/crearevento" element={<PanelEventosEspeciales />} /> 
     </Routes>
   );
 };

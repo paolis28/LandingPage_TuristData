@@ -85,6 +85,7 @@ const PanelVerEstablecimiento = () => {
         </div>
         <nav className="sidebar-nav">
           <button className="sidebar-btn">Agregar establecimiento</button>
+          <button className="sidebar-btn">Agregar eventos</button>
           <button className="sidebar-btn active">Ver Establecimiento</button>
           <button className="sidebar-btn">Perfil</button>
           <button className="sidebar-btn">Cerrar sesión</button>

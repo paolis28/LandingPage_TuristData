@@ -47,6 +47,14 @@ export default function PanelEstablecimiento() {
           >
             Ver Establecimiento
           </button>
+
+          <button
+            className={`sidebar-btn ${isActive('/crear') ? 'active' : ''}`}
+            onClick={() => navigate('/crearevento')}
+          >
+            Agregar Evento
+          </button>
+
           <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
             Perfil
           </button>
