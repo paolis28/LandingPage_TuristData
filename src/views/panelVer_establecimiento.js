@@ -159,6 +159,7 @@ const PanelVerEstablecimiento = () => {
                 </div>
 
                 <p className="establishment-city">{establishment.ciudad}</p>
+                <p className="establishment-city">{establishment.estado}</p>
 
                 <p className="establishment-description">{establishment.descripcion}</p>
 

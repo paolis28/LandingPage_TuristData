@@ -30,8 +30,8 @@ export default function PanelCrear() {
     formData.append('nombre', nombreLugar);
     formData.append('direccion', direccion);
     formData.append('ciudad', ciudad);
-    formData.append('tipo', tipo);
     formData.append('estado', estado);
+    formData.append('tipo', tipo);
     formData.append('horario', `${horarioApertura} - ${horarioCierre}`);
     formData.append('precio', precio);
     formData.append('imagen', imagenFile);
