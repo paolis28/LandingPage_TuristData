@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'; // agrega useEffect
 import { useNavigate, useLocation } from 'react-router-dom';
-import '../styles/Panelestablecimiento.css';
+import '../styles/PanelCrear.css';
 
 export default function PanelCrear() {
   const [email, setEmail] = useState(''); // para almacenar correo usuario
@@ -94,8 +94,17 @@ export default function PanelCrear() {
   return (
     <div className="dashboard-establishment-container">
       <div className="sidebar">
-        <div className="sidebar-header">
-          <h2>Hola {email}</h2> {/* Muestra el correo aquí */}
+        <div className="profile-section">
+          <div className="profile-image">
+            {/* El ícono de usuario se muestra via CSS ::before */}
+          </div>
+          <div className="profile-info">
+            <h3>Hola</h3>
+            <p>{email ? email.split('@')[0] : 'Usuario'}</p>
+          </div>
+          <button className="edit-profile-btn" onClick={() => console.log('Editar perfil')}>
+            Editar Perfil
+          </button>
         </div>
 
         <div className="sidebar-nav">
@@ -103,22 +112,36 @@ export default function PanelCrear() {
             className={`sidebar-btn ${isActive('/crear') ? 'active' : ''}`}
             onClick={() => navigate('/crear')}
           >
-            Agregar establecimiento
+            <div className="btn-icon">🏢</div>
+            <div className="btn-content">
+              <span className="btn-title">Agregar establecimiento</span>
+              <span className="btn-subtitle">Crear nuevo lugar turístico</span>
+            </div>
           </button>
+
           <button
             className={`sidebar-btn ${isActive('/verestablecimiento') ? 'active' : ''}`}
             onClick={() => navigate('/verestablecimiento')}
           >
-            Ver Establecimiento
+            <div className="btn-icon">👁️</div>
+            <div className="btn-content">
+              <span className="btn-title">Ver Establecimiento</span>
+              <span className="btn-subtitle">Gestionar mis lugares</span>
+            </div>
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
-            Perfil
-          </button>
-          <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
-            Cerrar sesión
-          </button>
-          <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
-            Acerca de
+
+          <button 
+            className="sidebar-btn logout-btn" 
+            onClick={() => {
+              localStorage.removeItem('userData');
+              navigate('/');
+            }}
+          >
+            <div className="btn-icon">🚪</div>
+            <div className="btn-content">
+              <span className="btn-title">Cerrar sesión</span>
+              <span className="btn-subtitle">Salir de forma segura</span>
+            </div>
           </button>
         </div>
       </div>
@@ -132,68 +155,77 @@ export default function PanelCrear() {
         <div className="form-card">
           <h2>Registrar Establecimiento</h2>
 
-          {/* Resto del formulario sin cambios */}
-
-          <div className="form-group">
-            <label>Nombre del lugar:</label>
-            <input type="text" value={nombreLugar} onChange={(e) => setNombreLugar(e.target.value)} />
+          {/* Fila 1: Nombre del lugar y Tipo */}
+          <div className="form-row">
+            <div className="form-group">
+              <label>Nombre del lugar:</label>
+              <input type="text" value={nombreLugar} onChange={(e) => setNombreLugar(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Tipo:</label>
+              <input type="text" value={tipo} onChange={(e) => setTipo(e.target.value)} />
+            </div>
           </div>
 
+          {/* Fila 2: Dirección completa */}
           <div className="form-group">
             <label>Dirección:</label>
             <input type="text" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
           </div>
 
-          <div className="form-group">
-            <label>Ciudad:</label>
-            <input type="text" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+          {/* Fila 3: Ciudad y Estado */}
+          <div className="form-row">
+            <div className="form-group">
+              <label>Ciudad:</label>
+              <input type="text" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Estado:</label>
+              <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+                <option value="">Selecciona el estado</option>
+                <option value="Chiapas">Chiapas</option>
+                <option value="Oaxaca">Oaxaca</option>
+                <option value="Yucatán">Yucatán</option>
+              </select>
+            </div>
           </div>
 
-          <div className="form-group">
-            <label>Tipo:</label>
-            <input type="text" value={tipo} onChange={(e) => setTipo(e.target.value)} />
+          {/* Fila 4: Horarios */}
+          <div className="form-row">
+            <div className="form-group">
+              <label>Horario de apertura:</label>
+              <input type="time" value={horarioApertura} onChange={(e) => setHorarioApertura(e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Horario de cierre:</label>
+              <input type="time" value={horarioCierre} onChange={(e) => setHorarioCierre(e.target.value)} />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label>Estado:</label>
-            <select value={estado} onChange={(e) => setEstado(e.target.value)}>
-              <option value="">Selecciona el estado</option>
-              <option value="Chiapas">Chiapas</option>
-              <option value="Oaxaca">Oaxaca</option>
-              <option value="Yucatán">Yucatán</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Horario de apertura:</label>
-            <input type="time" value={horarioApertura} onChange={(e) => setHorarioApertura(e.target.value)} />
-          </div>
-
-          <div className="form-group">
-            <label>Horario de cierre:</label>
-            <input type="time" value={horarioCierre} onChange={(e) => setHorarioCierre(e.target.value)} />
-          </div>
-
-          <div className="form-group">
+          {/* Fila 5: Precio */}
+          <div className="form-group price-group">
             <label>Precio promedio (MXN):</label>
-            <input
-              type="range"
-              min="0"
-              max="1000"
-              step="1"
-              value={Math.floor(precio)}
-              onChange={(e) => setPrecio(e.target.value)}
-            />
-            <input
-              type="number"
-              step="0.01"
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-              style={{ marginTop: '10px', width: '100%' }}
-            />
-            <p>{parseFloat(precio).toFixed(2)} MXN</p>
+            <div className="price-inputs">
+              <input
+                type="range"
+                min="0"
+                max="1000"
+                step="1"
+                value={Math.floor(precio)}
+                onChange={(e) => setPrecio(e.target.value)}
+              />
+              <input
+                type="number"
+                step="0.01"
+                value={precio}
+                onChange={(e) => setPrecio(e.target.value)}
+                placeholder="Ingresa el precio promedio"
+              />
+              <p>{parseFloat(precio).toFixed(2)} MXN</p>
+            </div>
           </div>
 
+          {/* Fila 6: Imagen */}
           <div className="form-group">
             <label>Imagen:</label>
             <div

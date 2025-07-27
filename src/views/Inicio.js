@@ -75,34 +75,37 @@ const Inicio = () => {
             <MapPin style={{ height: '2rem', width: '2rem', color: 'white' }} />
             <span className='logoText'>TurismoData MX</span>
           </div>
-          <Link to="/contacto">
-            <button 
-              className='contactButton'
-              onMouseEnter={handleContactButtonHover}
-              onMouseLeave={handleContactButtonLeave}
-            >
-              Contacto
-            </button>
-          </Link>
+          
+          <div className='navButtons'>
+            <Link to="/contacto">
+              <button 
+                className='contactButton'
+                onMouseEnter={handleContactButtonHover}
+                onMouseLeave={handleContactButtonLeave}
+              >
+                Contacto
+              </button>
+            </Link>
 
-          <Link to="/login">
-            <button 
-              className='contactButton'
-              onMouseEnter={hanldeLoginButtonHover}
-              onMouseLeave={handleLoginButtonLeave}>
-              Login 
-            </button>
-          </Link>
+            <Link to="/login">
+              <button 
+                className='contactButton'
+                onMouseEnter={hanldeLoginButtonHover}
+                onMouseLeave={handleLoginButtonLeave}>
+                Login 
+              </button>
+            </Link>
 
-          <Link to="/register">
-            <button 
-              className='contactButton'
-              onMouseEnter={hanldeRegisterButtonHover}
-              onMouseLeave={handleRegiterButtonLeave}
-            >
-              Registro 
-            </button>
-          </Link>
+            <Link to="/register">
+              <button 
+                className='contactButton'
+                onMouseEnter={hanldeRegisterButtonHover}
+                onMouseLeave={handleRegiterButtonLeave}
+              >
+                Registro 
+              </button>
+            </Link>
+          </div>
         </nav>
       </header>
 

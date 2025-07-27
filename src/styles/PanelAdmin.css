@@ -1,36 +1,67 @@
-/* Panel administrador.css */
+/* Panel Administrador Moderno */
 .dashboard-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #0891b2 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,300 1000,1000"/><polygon fill="rgba(255,255,255,0.02)" points="0,800 1000,100 1000,800"/></svg>');
+  pointer-events: none;
 }
 
 .sidebar {
-  width: 300px;
-  background-color: #4ecdc4;
-  padding: 40px 30px;
+  width: 350px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .profile-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 3rem;
+  text-align: center;
 }
 
 .profile-image {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 3px solid rgba(255, 255, 255, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .profile-image img {
@@ -40,110 +71,483 @@
   border-radius: 50%;
 }
 
+.profile-image::before {
+  content: '👤';
+  font-size: 4rem;
+  color: rgba(20, 184, 166, 0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .edit-profile-btn {
-  background-color: #2a9d8f;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: 600;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  color: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.edit-profile-btn:hover::before {
+  left: 100%;
 }
 
 .edit-profile-btn:hover {
-  background-color: #264653;
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #111827;
 }
 
 .main-content {
   flex: 1;
-  background-color: #f5f5f5;
-  padding: 40px 60px;
+  padding: 3rem 4rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
-  margin-bottom: 60px;
+  margin-bottom: 5rem; /* Aumentado de 4rem a 5rem para más espacio debajo */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem; /* Aumentado de 2.5rem a 3rem para más separación */
 }
 
 .header h1 {
-  font-size: 48px;
-  font-weight: 700;
-  color: #333;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0; /* Eliminamos margin para usar gap del flex */
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+  line-height: 1.2;
+  display: block; /* Aseguramos que sea block */
+  width: 100%;
+  text-align: center; /* Asegurar alineación central */
+}
+
+.header p {
+  font-size: 1.5rem; /* Aumentado de 1.25rem para más protagonismo */
+  color: #1f2937; /* Color más oscuro para mayor contraste y protagonismo */
   margin: 0;
+  font-weight: 600; /* Aumentado de 500 a 600 para más peso visual */
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.4); /* Sombra más pronunciada */
+  padding: 1.5rem 3rem; /* Aumentado padding para hacer más grande */
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Border más prominente */
+  border-radius: 60px; /* Más redondeado para más elegancia */
+  background: rgba(255, 255, 255, 0.2); /* Fondo más visible */
+  backdrop-filter: blur(15px); /* Más blur para efecto glassmorphism */
+  display: block; /* Aseguramos que sea block */
+  width: fit-content; /* Solo el ancho necesario */
+  text-align: center; /* Asegurar alineación central */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Añadida sombra para profundidad */
+  letter-spacing: 0.5px; /* Espaciado de letras para mejor legibilidad */
+  transform: translateY(0); /* Base para animación */
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.header p:hover {
+  transform: translateY(-2px); /* Efecto hover sutil */
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .menu-options {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Tres columnas iguales para una sola línea */
+  gap: 2rem; /* Aumentado de 1.5rem a 2rem para más separación */
+  max-width: 1300px; /* Aumentado de 1200px para más espacio */
+  margin: 0 auto;
+  width: 100%;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
+  padding: 2.5rem 2rem; /* Aumentado padding significativamente */
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border-radius: 25px; /* Aumentado border radius para más elegancia */
   cursor: pointer;
-  transition: all 0.3s ease;
-  border: 1px solid #e0e0e0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Sombra más pronunciada */
+  min-height: 160px; /* Altura mínima para cards más grandes */
 }
 
-.menu-item:hover {
-  background-color: #f8f9fa;
-  border-color: #4ecdc4;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Colores específicos para cada card */
+
+/* Mis Proyectos - Azul/Verde (Gestión/Productividad) */
+.menu-item:nth-child(1) {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.15));
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.menu-item:nth-child(1):hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(16, 185, 129, 0.25));
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+}
+
+.menu-item:nth-child(1) .menu-icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3));
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #1e40af;
+}
+
+.menu-item:nth-child(1):hover .menu-icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(16, 185, 129, 0.4));
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+}
+
+/* Configuración - Púrpura/Gris (Herramientas/Ajustes) */
+.menu-item:nth-child(2) {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(107, 114, 128, 0.15));
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.menu-item:nth-child(2):hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(107, 114, 128, 0.25));
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+}
+
+.menu-item:nth-child(2) .menu-icon {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(107, 114, 128, 0.3));
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #7c3aed;
+}
+
+.menu-item:nth-child(2):hover .menu-icon {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(107, 114, 128, 0.4));
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25);
+}
+
+/* Cerrar Sesión - Rojo/Naranja (Salida/Advertencia) */
+.menu-item:nth-child(3) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(249, 115, 22, 0.15));
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.menu-item:nth-child(3):hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(249, 115, 22, 0.25));
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+}
+
+.menu-item:nth-child(3) .menu-icon {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(249, 115, 22, 0.3));
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #dc2626;
+}
+
+.menu-item:nth-child(3):hover .menu-icon {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(249, 115, 22, 0.4));
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-item:hover::before {
+  opacity: 1;
+}
+
+.menu-item:active {
+  transform: translateY(-4px) scale(1.01);
 }
 
 .menu-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 16px;
-  color: #666;
+  width: 70px; /* Aumentado de 60px */
+  height: 70px; /* Aumentado de 60px */
+  margin-right: 2rem; /* Aumentado margen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem; /* Aumentado tamaño de fuente */
+  font-weight: bold;
+  border-radius: 20px; /* Aumentado border radius */
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+}
+
+.menu-item:hover .menu-icon {
+  transform: scale(1.15) rotate(8deg); /* Efecto hover más pronunciado */
+}
+
+.menu-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.75rem; /* Añadido gap para mejor separación */
 }
 
 .menu-item span {
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  font-size: 1.4rem; /* Aumentado de 1.25rem */
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive */
+.menu-description {
+  font-size: 1rem; /* Aumentado de 0.9rem */
+  color: #4b5563;
+  line-height: 1.5; /* Mejor line-height */
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Iconos específicos usando texto */
+.menu-item:nth-child(1) .menu-icon::before {
+  content: '📂';
+  font-size: 1.8rem;
+}
+
+.menu-item:nth-child(2) .menu-icon::before {
+  content: '⚙';
+  font-size: 1.8rem;
+}
+
+.menu-item:nth-child(3) .menu-icon::before {
+  content: '🚪';
+  font-size: 1.8rem;
+}
+
+/* Animación de entrada */
+.menu-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideInUp 0.6s ease forwards;
+}
+
+.menu-item:nth-child(1) { animation-delay: 0.1s; }
+.menu-item:nth-child(2) { animation-delay: 0.2s; }
+.menu-item:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 300px;
+    padding: 1.5rem;
+  }
+  
+  .main-content {
+    padding: 2rem 2.5rem;
+  }
+  
+  .menu-options {
+    grid-template-columns: 1fr 1fr 1fr; /* Mantener 3 columnas en tablets */
+    gap: 1rem;
+    max-width: 800px;
+  }
+  
+  .menu-item {
+    padding: 1.5rem 1rem;
+  }
+  
+  .menu-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  .menu-item span {
+    font-size: 1.1rem;
+  }
+  
+  .menu-description {
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
+    min-height: 100vh;
   }
   
   .sidebar {
     width: 100%;
-    padding: 20px;
+    padding: 1.5rem;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
   
   .profile-section {
     margin-bottom: 0;
-    margin-right: 20px;
+    margin-right: 2rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
   }
   
   .profile-image {
     width: 80px;
     height: 80px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+  }
+  
+  .profile-image::before {
+    font-size: 2rem;
+  }
+  
+  .edit-profile-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
   }
   
   .main-content {
-    padding: 20px;
+    padding: 2rem 1.5rem;
+  }
+  
+  .header {
+    margin-bottom: 2rem;
+    gap: 1.5rem;
   }
   
   .header h1 {
-    font-size: 36px;
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+  
+  .header p {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
   }
   
   .menu-options {
-    max-width: 100%;
+    gap: 1.5rem;
+    grid-template-columns: 1fr; /* Cambiar a una columna en móviles */
+    max-width: 500px;
+  }
+  
+  .menu-item {
+    padding: 1.5rem;
+  }
+  
+  .menu-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    font-size: 1.3rem;
+  }
+  
+  .menu-item span {
+    font-size: 1.1rem;
+  }
+  
+  .menu-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .profile-section {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .profile-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .header {
+    gap: 1rem;
+  }
+  
+  .header p {
+    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .menu-item {
+    padding: 1.25rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .menu-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .menu-text {
+    align-items: center;
+  }
+  
+  .menu-item span {
+    font-size: 1rem;
+  }
+  
+  .menu-description {
+    font-size: 0.8rem;
   }
 }

@@ -27,104 +27,170 @@ export default function PanelEstablecimiento() {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleEditProfile = () => {
+    console.log('Editar perfil');
+  };
+
   return (
     <div className="dashboard-establishment-container">
       <div className="sidebar">
-        <div className="sidebar-header">
-          <h2>Hola {email || 'Usuario'}</h2>
+        <div className="profile-section">
+          <div className="profile-image">
+            {/* El ícono de usuario se muestra via CSS ::before */}
+          </div>
+          <div className="profile-info">
+            <h3>Hola</h3>
+            <p>{email ? email.split('@')[0] : 'Usuario'}</p>
+          </div>
+          <button className="edit-profile-btn" onClick={handleEditProfile}>
+            Editar Perfil
+          </button>
         </div>
 
         <div className="sidebar-nav">
-          <button
-            className={`sidebar-btn ${isActive('/crear') ? 'active' : ''}`}
-            onClick={() => navigate('/crear')}
-          >
-            Agregar establecimiento
-          </button>
-          <button
-            className={`sidebar-btn ${isActive('/verestablecimiento') ? 'active' : ''}`}
-            onClick={() => navigate('/verestablecimiento')}
-          >
-            Ver Establecimiento
-          </button>
-
-          <button
-            className={`sidebar-btn ${isActive('/crear') ? 'active' : ''}`}
-            onClick={() => navigate('/crearevento')}
-          >
-            Agregar Evento
-          </button>
-
           <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
-            Perfil
+            <div className="btn-icon">👤</div>
+            <div className="btn-content">
+              <span className="btn-title">Perfil</span>
+              <span className="btn-subtitle">Tu información personal</span>
+            </div>
           </button>
+
           <button
-            className="sidebar-btn"
+            className="sidebar-btn logout-btn"
             onClick={() => {
               localStorage.removeItem('userData');
               navigate('/');
             }}
           >
-            Cerrar sesión
+            <div className="btn-icon">🚪</div>
+            <div className="btn-content">
+              <span className="btn-title">Cerrar sesión</span>
+              <span className="btn-subtitle">Salir de forma segura</span>
+            </div>
           </button>
+
           <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
-            Acerca de
+            <div className="btn-icon">ℹ️</div>
+            <div className="btn-content">
+              <span className="btn-title">Acerca de</span>
+              <span className="btn-subtitle">Información de la app</span>
+            </div>
           </button>
         </div>
       </div>
 
       <div className="main-content">
-        <div className="establishment-section">
-          <div className="create-establishment-card" onClick={() => navigate('/crear')}>
-            <div className="plus-icon">
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <line
-                  x1="12"
-                  y1="5"
-                  x2="12"
-                  y2="19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <line
-                  x1="5"
-                  y1="12"
-                  x2="19"
-                  y2="12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+        <div className="dashboard-header">
+          <h1>Panel de Control</h1>
+          <p>Gestiona tus establecimientos y eventos de manera eficiente</p>
+        </div>
+
+        <div className="dashboard-grid">
+          {/* Estadísticas principales */}
+          <div className="stats-section">
+            <div className="stat-card">
+              <div className="stat-icon">🏢</div>
+              <div className="stat-content">
+                <h3>3</h3>
+                <p>Establecimientos</p>
+              </div>
             </div>
-            <button className="create-btn">Crear Establecimiento</button>
+            
+            <div className="stat-card">
+              <div className="stat-icon">📅</div>
+              <div className="stat-content">
+                <h3>8</h3>
+                <p>Eventos Activos</p>
+              </div>
+            </div>
+          </div>
+          
+ 
+          {/* Acciones rápidas */}
+          <div className="quick-actions">
+          <h2>Acciones Rápidas</h2>
+          <div className="action-grid">
+          <div className="action-card" onClick={() => navigate('/crear')}>
+          <div className="action-icon">🏢</div>
+         <h3>Nuevo Establecimiento</h3>
+         <p>Agregar un lugar turístico</p>
+         </div>
+
+         <div className="action-card" onClick={() => navigate('/crearevento')}>
+         <div className="action-icon">📆</div>
+         <h3>Evento por Temporada</h3>
+         <p>Programar eventos recurrentes o festivos</p>
+         </div>
+
+         <div className="action-card" onClick={() => navigate('/crearevento_especial')}>
+         <div className="action-icon">✨</div>
+         <h3>Evento Especial</h3>
+         <p>Planear actividades únicas o destacadas</p>
+         </div>
+
+         <div className="action-card" onClick={() => navigate('/verestablecimiento')}>
+         <div className="action-icon">👁️</div>
+         <h3>Ver Mis Lugares</h3>
+         <p>Gestionar establecimientos</p>
+         </div>
+        </div>
+            </div>
+          {/* Últimos establecimientos */}
+          <div className="recent-section">
+            <div className="section-header">
+              <h2>Últimos Establecimientos</h2>
+              <button className="see-all-btn" onClick={() => navigate('/verestablecimiento')}>
+                Ver todos
+              </button>
+            </div>
+            
+            <div className="recent-list">
+              <div className="recent-item">
+                <div className="item-icon">🏨</div>
+                <div className="item-content">
+                  <h4>Hotel Playa Azul</h4>
+                  <p>Creado hace 2 días</p>
+                </div>
+                <div className="item-status active">Activo</div>
+              </div>
+              
+              <div className="recent-item">
+                <div className="item-icon">🍽️</div>
+                <div className="item-content">
+                  <h4>Restaurante La Costa</h4>
+                  <p>Creado hace 5 días</p>
+                </div>
+                <div className="item-status active">Activo</div>
+              </div>
+              
+              <div className="recent-item">
+                <div className="item-icon">🎭</div>
+                <div className="item-content">
+                  <h4>Teatro Municipal</h4>
+                  <p>Creado hace 1 semana</p>
+                </div>
+                <div className="item-status pending">Pendiente</div>
+              </div>
+            </div>
           </div>
 
-          <div className="establishment-status">
-            <div className="status-message">
-              <h3>Aún No has Registrado Ningún Establecimiento</h3>
-              <p>Haz Click en el Botón Para Comenzar</p>
-            </div>
-
-            <div className="action-buttons">
-              <button className="action-btn modify-btn" onClick={() => console.log('Modificar')}>
-                Modificar
-              </button>
-              <button className="action-btn eliminate-btn" onClick={() => console.log('Eliminar')}>
-                Eliminar
-              </button>
-              <button className="action-btn save-btn" onClick={() => console.log('Guardar')}>
-                Guarda cambios
-              </button>
+          {/* Estado del sistema */}
+          <div className="system-status">
+            <h2>Estado del Sistema</h2>
+            <div className="status-content">
+              <div className="status-item">
+                <div className="status-indicator online"></div>
+                <span>Todos los servicios operativos</span>
+              </div>
+              <div className="status-item">
+                <div className="status-indicator online"></div>
+                <span>Base de datos sincronizada</span>
+              </div>
+              <div className="status-item">
+                <div className="status-indicator warning"></div>
+                <span>Próximo mantenimiento: 15 Mar</span>
+              </div>
             </div>
           </div>
         </div>

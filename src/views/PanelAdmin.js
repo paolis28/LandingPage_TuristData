@@ -37,7 +37,7 @@ export default function PanelAdmin() {
       <div className="sidebar">
         <div className="profile-section">
           <div className="profile-image">
-            <img src="" alt="Perfil" />
+            {/* El ícono de usuario se muestra via CSS ::before */}
           </div>
           <button className="edit-profile-btn" onClick={handleEditProfile}>
             Editar Perfil
@@ -47,26 +47,45 @@ export default function PanelAdmin() {
 
       <div className="main-content">
         <div className="header">
-          <h1>Hola {userEmail ? userEmail : "Usuario"} 👋</h1>
-          <p style={{ fontSize: '18px', marginTop: '10px' }}>
-            Selecciona una opción para continuar
-          </p>
+          <h1>Hola {userEmail ? userEmail.split('@')[0] : "Usuario"} 👋</h1>
+          <p>Selecciona una opción para continuar</p>
         </div>
 
         <div className="menu-options">
           <div className="menu-item" onClick={handleMyProjects}>
-            <div className="menu-icon">📁</div>
-            <span>Mis Proyectos</span>
+            <div className="menu-icon">
+              {/* Icono se muestra via CSS ::before */}
+            </div>
+            <div className="menu-text">
+              <span>Mis Proyectos</span>
+              <div className="menu-description">
+                Gestiona y visualiza todos tus establecimientos turísticos
+              </div>
+            </div>
           </div>
 
           <div className="menu-item" onClick={handleConfiguration}>
-            <div className="menu-icon">⚙️</div>
-            <span>Configuración</span>
+            <div className="menu-icon">
+              {/* Icono se muestra via CSS ::before */}
+            </div>
+            <div className="menu-text">
+              <span>Configuración</span>
+              <div className="menu-description">
+                Personaliza tu cuenta y preferencias del sistema
+              </div>
+            </div>
           </div>
 
           <div className="menu-item" onClick={handleCloseSession}>
-            <div className="menu-icon">🚪</div>
-            <span>Cerrar Sesión</span>
+            <div className="menu-icon">
+              {/* Icono se muestra via CSS ::before */}
+            </div>
+            <div className="menu-text">
+              <span>Cerrar Sesión</span>
+              <div className="menu-description">
+                Termina tu sesión de forma segura
+              </div>
+            </div>
           </div>
         </div>
       </div>

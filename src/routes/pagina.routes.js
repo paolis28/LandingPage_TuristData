@@ -9,6 +9,7 @@ import AvisoPrivacidad from '../views/avisoprivacidad';
 import PanelCrear from '../views/panel_crear'; 
 import PanelVerEstablecimiento from '../views/panelVer_establecimiento';
 import PanelEventosEspeciales from '../views/Panel_eventosespeciales';
+import CrearEvento from '../views/Crearevento';
 const Rutas = () => {
   return (
     <Routes>
@@ -22,6 +23,7 @@ const Rutas = () => {
       <Route path="/crear" element={<PanelCrear />} /> 
       <Route path="/verestablecimiento" element={<PanelVerEstablecimiento />} /> 
       <Route path="/crearevento" element={<PanelEventosEspeciales />} /> 
+      <Route path="/crearevento_especial" element={<CrearEvento />} /> 
     </Routes>
   );
 };
