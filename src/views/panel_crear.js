@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'; // agrega useEffect
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Panelestablecimiento.css';
 
 export default function PanelCrear() {
-  const [email, setEmail] = useState(''); // para almacenar correo usuario
+  const [email, setEmail] = useState('');
   const [nombreLugar, setNombreLugar] = useState('');
   const [direccion, setDireccion] = useState('');
   const [ciudad, setCiudad] = useState('');
@@ -19,26 +19,64 @@ export default function PanelCrear() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
+  // Función para obtener el token correctamente
+  const getAuthToken = () => {
+    const userDataStr = localStorage.getItem('userData');
+    if (userDataStr) {
+      try {
+        const userData = JSON.parse(userDataStr);
+        return userData.token;
+      } catch (error) {
+        console.error('Error parsing userData:', error);
+        return null;
+      }
+    }
+    return null;
+  };
+
+  // Función para verificar si el usuario está autenticado
+  const checkAuth = () => {
+    const token = getAuthToken();
+    if (!token) {
+      setMensaje('Sesión expirada. Redirigiendo al login...');
+      setTimeout(() => {
+        localStorage.removeItem('userData');
+        navigate('/login');
+      }, 2000);
+      return false;
+    }
+    return true;
+  };
+
   // Leer el correo del usuario desde localStorage al montar el componente
   useEffect(() => {
     const userDataStr = localStorage.getItem('userData');
     if (userDataStr) {
-      const userData = JSON.parse(userDataStr);
-      if (userData.email) setEmail(userData.email);
+      try {
+        const userData = JSON.parse(userDataStr);
+        if (userData.email) setEmail(userData.email);
+      } catch (error) {
+        console.error('Error parsing userData:', error);
+        navigate('/login');
+      }
+    } else {
+      // Si no hay userData, redirigir al login
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   const handleAddEstablishment = async () => {
+    // Verificar autenticación antes de proceder
+    if (!checkAuth()) {
+      return;
+    }
+
     if (!imagenFile) {
       setMensaje('Debes seleccionar una imagen');
       return;
     }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
-    }
+    const token = getAuthToken();
 
     const formData = new FormData();
     formData.append('nombre', nombreLugar);
@@ -54,7 +92,7 @@ export default function PanelCrear() {
       const response = await fetch('https://turistdata-back.onrender.com/api/establecimientos/rg', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`, // Asegúrate de que el formato sea correcto
         },
         body: formData,
       });
@@ -64,10 +102,17 @@ export default function PanelCrear() {
         console.log('Establecimiento creado:', data);
         setMensaje('Establecimiento registrado con éxito');
         limpiarCampos();
+      } else if (response.status === 401) {
+        // Token expirado o inválido
+        setMensaje('Sesión expirada. Redirigiendo al login...');
+        localStorage.removeItem('userData');
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       } else {
-        const errorText = await response.text();
-        console.error('Error al registrar:', errorText);
-        setMensaje('Error al registrar el establecimiento');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Error al registrar:', errorData);
+        setMensaje(errorData.error || 'Error al registrar el establecimiento');
       }
     } catch (error) {
       console.error('Error de conexión:', error);
@@ -91,11 +136,16 @@ export default function PanelCrear() {
     setImagenFile(null);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    navigate('/login');
+  };
+
   return (
     <div className="dashboard-establishment-container">
       <div className="sidebar">
         <div className="sidebar-header">
-          <h2>Hola {email}</h2> {/* Muestra el correo aquí */}
+          <h2>Hola {email}</h2>
         </div>
 
         <div className="sidebar-nav">
@@ -114,7 +164,7 @@ export default function PanelCrear() {
           <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
             Perfil
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
+          <button className="sidebar-btn" onClick={handleLogout}>
             Cerrar sesión
           </button>
           <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
@@ -131,8 +181,6 @@ export default function PanelCrear() {
 
         <div className="form-card">
           <h2>Registrar Establecimiento</h2>
-
-          {/* Resto del formulario sin cambios */}
 
           <div className="form-group">
             <label>Nombre del lugar:</label>
