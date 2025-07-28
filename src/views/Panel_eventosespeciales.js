@@ -31,15 +31,39 @@ export default function PanelEventosEspeciales() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
-  // Función para registrar temporada
-  const handleRegistrarTemporada = async () => {
+  // Función para verificar y manejar errores de token
+  const handleTokenError = (response) => {
+    if (response.status === 401) {
+      setMensaje('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+      // Limpiar el token expirado
+      localStorage.removeItem('token');
+      // Opcional: redirigir al login después de un delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+      return true;
+    }
+    return false;
+  };
+
+  // Función para obtener el token con validación
+  const getValidToken = () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
+      setMensaje('No se encontró el token de autenticación. Por favor, inicia sesión.');
+      return null;
     }
+    return token;
+  };
+
+  // Función para registrar temporada
+  const handleRegistrarTemporada = async () => {
+    const token = getValidToken();
+    if (!token) return;
 
     setCargando(true);
+    setMensaje(''); // Limpiar mensajes anteriores
+
     const formData = new FormData();
     formData.append('nombre', nombreTemporada);
     formData.append('fecha_inicio', fechaInicioTemporada);
@@ -55,6 +79,11 @@ export default function PanelEventosEspeciales() {
         body: formData,
       });
 
+      // Manejar errores de token
+      if (handleTokenError(response)) {
+        return;
+      }
+
       if (response.ok) {
         const data = await response.json();
         console.log('Temporada creada:', data);
@@ -62,13 +91,13 @@ export default function PanelEventosEspeciales() {
         setTemporadaRegistrada(true);
         setMensaje('Temporada registrada con éxito');
       } else {
-        const errorText = await response.text();
-        console.error('Error al registrar temporada:', errorText);
-        setMensaje('Error al registrar la temporada');
+        const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+        console.error('Error al registrar temporada:', errorData);
+        setMensaje(`Error al registrar la temporada: ${errorData.error || 'Error desconocido'}`);
       }
     } catch (error) {
       console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
+      setMensaje('No se pudo conectar con el servidor. Verifica tu conexión a internet.');
     } finally {
       setCargando(false);
     }
@@ -76,13 +105,12 @@ export default function PanelEventosEspeciales() {
 
   // Función para registrar lugar
   const handleRegistrarLugar = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
-    }
+    const token = getValidToken();
+    if (!token) return;
 
     setCargando(true);
+    setMensaje(''); // Limpiar mensajes anteriores
+
     const formData = new FormData();
     formData.append('nombre', nombreLugar);
     formData.append('estado', estadoLugar);
@@ -96,6 +124,11 @@ export default function PanelEventosEspeciales() {
         body: formData,
       });
 
+      // Manejar errores de token
+      if (handleTokenError(response)) {
+        return;
+      }
+
       if (response.ok) {
         const data = await response.json();
         console.log('Lugar creado:', data);
@@ -103,13 +136,13 @@ export default function PanelEventosEspeciales() {
         setLugarRegistrado(true);
         setMensaje('Lugar registrado con éxito');
       } else {
-        const errorText = await response.text();
-        console.error('Error al registrar lugar:', errorText);
-        setMensaje('Error al registrar el lugar');
+        const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+        console.error('Error al registrar lugar:', errorData);
+        setMensaje(`Error al registrar el lugar: ${errorData.error || 'Error desconocido'}`);
       }
     } catch (error) {
       console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
+      setMensaje('No se pudo conectar con el servidor. Verifica tu conexión a internet.');
     } finally {
       setCargando(false);
     }
@@ -122,13 +155,12 @@ export default function PanelEventosEspeciales() {
       return;
     }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
-    }
+    const token = getValidToken();
+    if (!token) return;
 
     setCargando(true);
+    setMensaje(''); // Limpiar mensajes anteriores
+
     const formData = new FormData();
     formData.append('nombre', nombreEvento);
     formData.append('fecha_inicio', fechaInicioEvento);
@@ -147,19 +179,24 @@ export default function PanelEventosEspeciales() {
         body: formData,
       });
 
+      // Manejar errores de token
+      if (handleTokenError(response)) {
+        return;
+      }
+
       if (response.ok) {
         const data = await response.json();
         console.log('Evento creado:', data);
         setMensaje('Evento especial registrado con éxito');
         limpiarCamposEvento();
       } else {
-        const errorText = await response.text();
-        console.error('Error al registrar evento:', errorText);
-        setMensaje('Error al registrar el evento especial');
+        const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+        console.error('Error al registrar evento:', errorData);
+        setMensaje(`Error al registrar el evento especial: ${errorData.error || 'Error desconocido'}`);
       }
     } catch (error) {
       console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
+      setMensaje('No se pudo conectar con el servidor. Verifica tu conexión a internet.');
     } finally {
       setCargando(false);
     }
@@ -193,6 +230,23 @@ export default function PanelEventosEspeciales() {
     setMensaje('');
   };
 
+  // Función para cerrar sesión
+  const handleCerrarSesion = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  // Verificar token al cargar el componente
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setMensaje('No hay sesión activa. Redirigiendo al login...');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    }
+  }, [navigate]);
+
   return (
     <div className="dashboard-establishment-container">
       <div className="sidebar">
@@ -209,13 +263,13 @@ export default function PanelEventosEspeciales() {
           >
             Ver Establecimiento
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
+          <button className="sidebar-btn" onClick={() => navigate('/perfil')}>
             Perfil
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
+          <button className="sidebar-btn" onClick={handleCerrarSesion}>
             Cerrar sesión
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
+          <button className="sidebar-btn" onClick={() => navigate('/acerca')}>
             Acerca de
           </button>
         </div>
@@ -244,6 +298,7 @@ export default function PanelEventosEspeciales() {
                     value={nombreTemporada} 
                     onChange={(e) => setNombreTemporada(e.target.value)}
                     placeholder="Ej: Primavera 2025"
+                    disabled={cargando}
                   />
                 </div>
 
@@ -252,7 +307,8 @@ export default function PanelEventosEspeciales() {
                   <input 
                     type="date" 
                     value={fechaInicioTemporada} 
-                    onChange={(e) => setFechaInicioTemporada(e.target.value)} 
+                    onChange={(e) => setFechaInicioTemporada(e.target.value)}
+                    disabled={cargando}
                   />
                 </div>
 
@@ -261,13 +317,18 @@ export default function PanelEventosEspeciales() {
                   <input 
                     type="date" 
                     value={fechaFinTemporada} 
-                    onChange={(e) => setFechaFinTemporada(e.target.value)} 
+                    onChange={(e) => setFechaFinTemporada(e.target.value)}
+                    disabled={cargando}
                   />
                 </div>
 
                 <div className="form-group">
                   <label>Tipo de temporada:</label>
-                  <select value={tipoTemporada} onChange={(e) => setTipoTemporada(e.target.value)}>
+                  <select 
+                    value={tipoTemporada} 
+                    onChange={(e) => setTipoTemporada(e.target.value)}
+                    disabled={cargando}
+                  >
                     <option value="">Selecciona el tipo</option>
                     <option value="Alta">Alta</option>
                     <option value="Media">Media</option>
@@ -308,7 +369,7 @@ export default function PanelEventosEspeciales() {
                     value={nombreLugar} 
                     onChange={(e) => setNombreLugar(e.target.value)}
                     placeholder="Ej: Monte Bello"
-                    disabled={!temporadaRegistrada}
+                    disabled={!temporadaRegistrada || cargando}
                   />
                 </div>
 
@@ -317,7 +378,7 @@ export default function PanelEventosEspeciales() {
                   <select 
                     value={estadoLugar} 
                     onChange={(e) => setEstadoLugar(e.target.value)}
-                    disabled={!temporadaRegistrada}
+                    disabled={!temporadaRegistrada || cargando}
                   >
                     <option value="">Selecciona el estado</option>
                     <option value="Chiapas">Chiapas</option>
@@ -354,7 +415,7 @@ export default function PanelEventosEspeciales() {
               value={nombreEvento} 
               onChange={(e) => setNombreEvento(e.target.value)}
               placeholder="Ej: Feria del Mango"
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              disabled={!temporadaRegistrada || !lugarRegistrado || cargando}
             />
           </div>
 
@@ -364,7 +425,7 @@ export default function PanelEventosEspeciales() {
               type="datetime-local" 
               value={fechaInicioEvento} 
               onChange={(e) => setFechaInicioEvento(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              disabled={!temporadaRegistrada || !lugarRegistrado || cargando}
             />
           </div>
 
@@ -374,7 +435,7 @@ export default function PanelEventosEspeciales() {
               type="datetime-local" 
               value={fechaFinalEvento} 
               onChange={(e) => setFechaFinalEvento(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              disabled={!temporadaRegistrada || !lugarRegistrado || cargando}
             />
           </div>
 
@@ -385,7 +446,7 @@ export default function PanelEventosEspeciales() {
               onChange={(e) => setDescripcionEvento(e.target.value)}
               placeholder="Describe el evento especial..."
               rows="4"
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              disabled={!temporadaRegistrada || !lugarRegistrado || cargando}
             />
           </div>
 
@@ -394,7 +455,7 @@ export default function PanelEventosEspeciales() {
             <select 
               value={estadoAfectado} 
               onChange={(e) => setEstadoAfectado(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              disabled={!temporadaRegistrada || !lugarRegistrado || cargando}
             >
               <option value="">Selecciona el estado</option>
               <option value="Chiapas">Chiapas</option>
