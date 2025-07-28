@@ -4,19 +4,19 @@ import '../styles/EventosEspeciales.css';
 
 export default function PanelEventosEspeciales() {
   // Estados para Temporada
-  const [nombreTemporada, setNombreTemporada] = useState('');
-  const [fechaInicioTemporada, setFechaInicioTemporada] = useState('');
-  const [fechaFinTemporada, setFechaFinTemporada] = useState('');
-  const [tipoTemporada, setTipoTemporada] = useState('');
-  const [estatus, setEstatus] = useState('');
-  const [temporadaRegistrada, setTemporadaRegistrada] = useState(false);
-  const [idTemporada, setIdTemporada] = useState(null);
+  // const [nombreTemporada, setNombreTemporada] = useState('');
+  // const [fechaInicioTemporada, setFechaInicioTemporada] = useState('');
+  // const [fechaFinTemporada, setFechaFinTemporada] = useState('');
+  // const [tipoTemporada, setTipoTemporada] = useState('');
+  // const [estatus, setEstatus] = useState('');
+  // const [temporadaRegistrada, setTemporadaRegistrada] = useState(false);
+  // const [idTemporada, setIdTemporada] = useState(null);
 
-  // Estados para Lugar
-  const [nombreLugar, setNombreLugar] = useState('');
-  const [estadoLugar, setEstadoLugar] = useState('');
-  const [lugarRegistrado, setLugarRegistrado] = useState(false);
-  const [idLugar, setIdLugar] = useState(null);
+  // // Estados para Lugar
+  // const [nombreLugar, setNombreLugar] = useState('');
+  // const [estadoLugar, setEstadoLugar] = useState('');
+  // const [lugarRegistrado, setLugarRegistrado] = useState(false);
+  // const [idLugar, setIdLugar] = useState(null);
 
   // Estados para Evento Especial
   const [nombreEvento, setNombreEvento] = useState('');
@@ -33,157 +33,157 @@ export default function PanelEventosEspeciales() {
   const isActive = (path) => location.pathname === path;
 
 // Función para obtener el token correctamente
-const getAuthToken = () => {
-  const userDataStr = localStorage.getItem('userData');
-  if (userDataStr) {
-    try {
-      const userData = JSON.parse(userDataStr);
-      return userData.token;
-    } catch (error) {
-      console.error('Error parsing userData:', error);
-      return null;
+  const getAuthToken = () => {
+    const userDataStr = localStorage.getItem('userData');
+    if (userDataStr) {
+      try {
+        const userData = JSON.parse(userDataStr);
+        return userData.token;
+      } catch (error) {
+        console.error('Error parsing userData:', error);
+        return null;
+      }
     }
-  }
-  return null;
-};
-
-const handleRegistrarTemporada = async () => {
-  const token = getAuthToken();
-  if (!token) {
-    setMensaje('No se encontró el token de autenticación');
-    return;
-  }
-
-  setCargando(true);
-  setMensaje('');
-
-  const payload = {
-    nombre: nombreTemporada,
-    fecha_inicio: fechaInicioTemporada,
-    fecha_fin: fechaFinTemporada,
-    tipo_temporada: tipoTemporada,
-    estatus: estatus
+    return null;
   };
 
-  try {
-    const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
+// const handleRegistrarTemporada = async () => {
+//   const token = getAuthToken();
+//   if (!token) {
+//     setMensaje('No se encontró el token de autenticación');
+//     return;
+//   }
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Temporada creada:', data);
-      setIdTemporada(data.id || data.id_temporadas);
-      setTemporadaRegistrada(true);
-      setMensaje('Temporada registrada con éxito');
-    } else if (response.status === 401) {
-      setMensaje('Sesión expirada. Redirigiendo al login...');
-      localStorage.removeItem('userData');
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-    } else {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('Error al registrar temporada:', errorData);
-      setMensaje(errorData.error || 'Error al registrar la temporada');
-    }
-  } catch (error) {
-    console.error('Error de conexión:', error);
-    setMensaje('No se pudo conectar con el servidor');
-  } finally {
-    setCargando(false);
-  }
-};
+//   setCargando(true);
+//   setMensaje('');
+
+  // const payload = {
+  //   nombre: nombreTemporada,
+  //   fecha_inicio: fechaInicioTemporada,
+  //   fecha_fin: fechaFinTemporada,
+  //   tipo_temporada: tipoTemporada,
+  //   estatus: estatus
+  // };
+
+//   try {
+//     const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
+//       method: 'POST',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(payload),
+//     });
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       console.log('Temporada creada:', data);
+//       setIdTemporada(data.id || data.id_temporadas);
+//       setTemporadaRegistrada(true);
+//       setMensaje('Temporada registrada con éxito');
+//     } else if (response.status === 401) {
+//       setMensaje('Sesión expirada. Redirigiendo al login...');
+//       localStorage.removeItem('userData');
+//       setTimeout(() => {
+//         navigate('/login');
+//       }, 2000);
+//     } else {
+//       const errorData = await response.json().catch(() => ({}));
+//       console.error('Error al registrar temporada:', errorData);
+//       setMensaje(errorData.error || 'Error al registrar la temporada');
+//     }
+//   } catch (error) {
+//     console.error('Error de conexión:', error);
+//     setMensaje('No se pudo conectar con el servidor');
+//   } finally {
+//     setCargando(false);
+//   }
+// };
 
 // ✅ FUNCIÓN CORREGIDA PARA REGISTRAR LUGAR
-const handleRegistrarLugar = async () => {
-  const token = getAuthToken();
-  if (!token) {
-    setMensaje('No se encontró el token de autenticación');
-    return;
-  }
+// const handleRegistrarLugar = async () => {
+//   const token = getAuthToken();
+//   if (!token) {
+//     setMensaje('No se encontró el token de autenticación');
+//     return;
+//   }
 
-  // Validaciones
-  if (!nombreLugar.trim()) {
-    setMensaje('El nombre del lugar es requerido');
-    return;
-  }
+//   // Validaciones
+//   if (!nombreLugar.trim()) {
+//     setMensaje('El nombre del lugar es requerido');
+//     return;
+//   }
 
-  if (!estadoLugar) {
-    setMensaje('Debe seleccionar un estado');
-    return;
-  }
+//   if (!estadoLugar) {
+//     setMensaje('Debe seleccionar un estado');
+//     return;
+//   }
 
-  setCargando(true);
-  setMensaje('');
+//   setCargando(true);
+//   setMensaje('');
 
-  const payloadLu = {
-    nombre: nombreLugar.trim(),
-    estado: estadoLugar
-  };
+//   const payloadLu = {
+//     nombre: nombreLugar.trim(),
+//     estado: estadoLugar
+//   };
 
-  console.log('🚀 Enviando datos del lugar:', payloadLu);
+//   console.log('🚀 Enviando datos del lugar:', payloadLu);
+// }
+//   try {
+//     // ✅ FETCH LIMPIO SIN HEADERS INCORRECTOS
+//     const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
+//       method: 'POST',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(payloadLu)
+//     });
 
-  try {
-    // ✅ FETCH LIMPIO SIN HEADERS INCORRECTOS
-    const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payloadLu)
-    });
+//     console.log('📡 Response status:', response.status);
 
-    console.log('📡 Response status:', response.status);
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('✅ Lugar creado:', data);
-      setIdLugar(data.id || data.id_lugar || data.id_lugares);
-      setLugarRegistrado(true);
-      setMensaje('Lugar registrado con éxito');
-    } else if (response.status === 401) {
-      setMensaje('Sesión expirada. Redirigiendo al login...');
-      localStorage.removeItem('userData');
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-    } else {
-      let errorMessage = `Error ${response.status}`;
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.error || errorData.message || errorMessage;
-      } catch (e) {
-        const errorText = await response.text();
-        if (errorText) errorMessage = errorText;
-      }
-      console.error('❌ Error del servidor:', errorMessage);
-      setMensaje(errorMessage);
-    }
-  } catch (error) {
-    console.error('💥 Error completo:', error);
-    if (error.message.includes('Failed to fetch')) {
-      setMensaje('Error de conexión: Verificar CORS en el servidor');
-    } else {
-      setMensaje(`Error de conexión: ${error.message}`);
-    }
-  } finally {
-    setCargando(false);
-  }
-};
+//     if (response.ok) {
+//       const data = await response.json();
+//       console.log('✅ Lugar creado:', data);
+//       setIdLugar(data.id || data.id_lugar || data.id_lugares);
+//       setLugarRegistrado(true);
+//       setMensaje('Lugar registrado con éxito');
+//     } else if (response.status === 401) {
+//       setMensaje('Sesión expirada. Redirigiendo al login...');
+//       localStorage.removeItem('userData');
+//       setTimeout(() => {
+//         navigate('/login');
+//       }, 2000);
+//     } else {
+//       let errorMessage = `Error ${response.status}`;
+//       try {
+//         const errorData = await response.json();
+//         errorMessage = errorData.error || errorData.message || errorMessage;
+//       } catch (e) {
+//         const errorText = await response.text();
+//         if (errorText) errorMessage = errorText;
+//       }
+//       console.error('❌ Error del servidor:', errorMessage);
+//       setMensaje(errorMessage);
+//     }
+//   } catch (error) {
+//     console.error('💥 Error completo:', error);
+//     if (error.message.includes('Failed to fetch')) {
+//       setMensaje('Error de conexión: Verificar CORS en el servidor');
+//     } else {
+//       setMensaje(`Error de conexión: ${error.message}`);
+//     }
+//   } finally {
+//     setCargando(false);
+//   }
+// };
 
 // Función para registrar evento especial
 const handleRegistrarEvento = async () => {
-  if (!temporadaRegistrada || !lugarRegistrado) {
-    setMensaje('Primero debe registrar la temporada y el lugar');
-    return;
-  }
+  // if (!temporadaRegistrada || !lugarRegistrado) {
+  //   setMensaje('Primero debe registrar la temporada y el lugar');
+  //   return;
+  // }
 
   const token = getAuthToken();
   if (!token) {
@@ -198,8 +198,8 @@ const handleRegistrarEvento = async () => {
   formData.append('fecha_final', fechaFinalEvento);
   formData.append('descripcion', descripcionEvento);
   formData.append('estado_afectado', estadoAfectado);
-  formData.append('id_temporada', idTemporada);
-  formData.append('id_lugar', idLugar);
+  // formData.append('id_temporada', idTemporada);
+  // formData.append('id_lugar', idLugar);
 
   try {
     const response = await fetch('https://turistdata-back.onrender.com/api/eventosespeciales/rg', {
@@ -244,19 +244,19 @@ const handleRegistrarEvento = async () => {
 
   const reiniciarTodo = () => {
     // Limpiar temporada
-    setNombreTemporada('');
-    setFechaInicioTemporada('');
-    setFechaFinTemporada('');
-    setTipoTemporada('');
-    setEstatus('')
-    setTemporadaRegistrada(false);
-    setIdTemporada(null);
+    // setNombreTemporada('');
+    // setFechaInicioTemporada('');
+    // setFechaFinTemporada('');
+    // setTipoTemporada('');
+    // setEstatus('')
+    // setTemporadaRegistrada(false);
+    // setIdTemporada(null);
 
-    // Limpiar lugar
-    setNombreLugar('');
-    setEstadoLugar('');
-    setLugarRegistrado(false);
-    setIdLugar(null);
+    // // Limpiar lugar
+    // setNombreLugar('');
+    // setEstadoLugar('');
+    // setLugarRegistrado(false);
+    // setIdLugar(null);
 
     // Limpiar evento
     limpiarCamposEvento();
@@ -301,9 +301,9 @@ const handleRegistrarEvento = async () => {
         </div>
 
         {/* Fila de cards para Temporada y Lugar */}
-        <div className="cards-row">
+        {/* <div className="cards-row"> */}
           {/* Card Temporada */}
-          <div className={`form-card ${temporadaRegistrada ? 'card-completed' : ''}`}>
+          {/* <div className={`form-card ${temporadaRegistrada ? 'card-completed' : ''}`}>
             <h2>
               {temporadaRegistrada ? '✓ Temporada Registrada' : '1. Registrar Temporada'}
             </h2>
@@ -347,10 +347,10 @@ const handleRegistrarEvento = async () => {
                     <option value="Baja">Baja</option>
                     <option value="Especial">Especial</option>
                   </select>
-                </div>
+                </div> */}
 
                 {/* ✅ SELECT DE ESTATUS CORREGIDO */}
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label>Estatus:</label>
                   <select value={estatus} onChange={(e) => setEstatus(e.target.value)}>
                     <option value="">Selecciona el estatus</option>
@@ -375,10 +375,10 @@ const handleRegistrarEvento = async () => {
                 <p><strong>Estatus:</strong> {estatus}</p>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Card Lugar */}
-          <div className={`form-card ${lugarRegistrado ? 'card-completed' : ''}`}>
+          {/* <div className={`form-card ${lugarRegistrado ? 'card-completed' : ''}`}>
             <h2>
               {lugarRegistrado ? '✓ Lugar Registrado' : '2. Registrar Lugar'}
             </h2>
@@ -425,7 +425,7 @@ const handleRegistrarEvento = async () => {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* Card Evento Especial */}
         <div className="form-card event-card">
@@ -438,7 +438,7 @@ const handleRegistrarEvento = async () => {
               value={nombreEvento} 
               onChange={(e) => setNombreEvento(e.target.value)}
               placeholder="Ej: Feria del Mango"
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              // disabled={!temporadaRegistrada || !lugarRegistrado}
             />
           </div>
 
@@ -448,7 +448,7 @@ const handleRegistrarEvento = async () => {
               type="datetime-local" 
               value={fechaInicioEvento} 
               onChange={(e) => setFechaInicioEvento(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              // disabled={!temporadaRegistrada || !lugarRegistrado}
             />
           </div>
 
@@ -458,7 +458,7 @@ const handleRegistrarEvento = async () => {
               type="datetime-local" 
               value={fechaFinalEvento} 
               onChange={(e) => setFechaFinalEvento(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              // disabled={!temporadaRegistrada || !lugarRegistrado}
             />
           </div>
 
@@ -469,7 +469,7 @@ const handleRegistrarEvento = async () => {
               onChange={(e) => setDescripcionEvento(e.target.value)}
               placeholder="Describe el evento especial..."
               rows="4"
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              // disabled={!temporadaRegistrada || !lugarRegistrado}
             />
           </div>
 
@@ -478,7 +478,7 @@ const handleRegistrarEvento = async () => {
             <select 
               value={estadoAfectado} 
               onChange={(e) => setEstadoAfectado(e.target.value)}
-              disabled={!temporadaRegistrada || !lugarRegistrado}
+              // disabled={!temporadaRegistrada || !lugarRegistrado}
             >
               <option value="">Selecciona el estado</option>
               <option value="Chiapas">Chiapas</option>
@@ -491,7 +491,7 @@ const handleRegistrarEvento = async () => {
             <button 
               className="create-btn" 
               onClick={handleRegistrarEvento}
-              disabled={cargando || !temporadaRegistrada || !lugarRegistrado || !nombreEvento || !fechaInicioEvento || !fechaFinalEvento || !descripcionEvento || !estadoAfectado}
+              disabled={cargando || !nombreEvento || !fechaInicioEvento || !fechaFinalEvento || !descripcionEvento || !estadoAfectado}
             >
               {cargando ? 'Registrando...' : 'Registrar Evento Especial'}
             </button>
