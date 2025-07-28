@@ -116,18 +116,25 @@ const handleRegistrarLugar = async () => {
   }
 
   setCargando(true);
-  const formData = new FormData();
-  formData.append('nombre', nombreLugar);
-  formData.append('estado', estadoLugar);
+  // const formData = new FormData();
+  // formData.append('nombre', nombreLugar);
+  // formData.append('estado', estadoLugar);
+
+const payloadLu = {
+  nombre: nombreLugar,
+  estado: estadoLugar
+};
 
   try {
     const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json', // ✅ Especificamos JSON
       },
-      body: formData,
+      body: JSON.stringify(payloadLu), // ✅ Enviamos JSON en lugar de FormData
     });
+
 
     if (response.ok) {
       const data = await response.json();
