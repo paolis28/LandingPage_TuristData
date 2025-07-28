@@ -129,7 +129,7 @@ const PanelVerComentarios = () => {
   const fetchComments = async (establishmentId) => {
     const token = getAuthToken();
     try {
-      const res = await fetch(`https://turistdata-back.onrender.com/api/comentarios/${establishmentId}`, {
+      const res = await fetch(`https://turistdata-back.onrender.com/api/comentario/establecimiento?establecimiento_id=${establishmentId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -261,33 +261,37 @@ const PanelVerComentarios = () => {
         </section>
 
         {selectedEstablishment && (
-          <section className="comments-section">
+        <section className="comments-section">
             <div className="comments-header">
-              <img
+            <img
                 src={selectedEstablishment.imagen || '/placeholder-image.jpg'}
                 alt={selectedEstablishment.nombre}
                 className="comments-image"
-              />
-              <div>
+            />
+            <div>
                 <h2>{selectedEstablishment.nombre}</h2>
                 <p>{selectedEstablishment.ciudad}, {selectedEstablishment.estado}</p>
-              </div>
             </div>
+            </div>
+
             <h3>Comentarios</h3>
+
             {comments.length > 0 ? (
-              <ul className="comments-list">
+            <ul className="comments-list">
                 {comments.map(comment => (
-                  <li key={comment.id} className="comment-item">
-                    <p><strong>{comment.usuario}</strong> — <em>{new Date(comment.fecha).toLocaleDateString()}</em></p>
-                    <p>{comment.texto}</p>
-                  </li>
+                <li key={comment.id_comentarios} className="comment-item">
+                    <p><strong>{comment.nombre}</strong></p>
+                    <p>{comment.comentario}</p>
+                    <p>⭐ {comment.estrellas_calificacion}</p>
+                </li>
                 ))}
-              </ul>
+            </ul>
             ) : (
-              <p>No hay comentarios disponibles.</p>
+            <p>No hay comentarios disponibles.</p>
             )}
-          </section>
+        </section>
         )}
+
       </main>
     </div>
   );
