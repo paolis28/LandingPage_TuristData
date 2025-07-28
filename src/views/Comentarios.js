@@ -147,7 +147,7 @@ const PanelVerComentarios = () => {
 
   const handleSelectEstablishment = (est) => {
     setSelectedEstablishment(est);
-    fetchComments(est.id);
+    fetchComments(est.idalta_establecimiento || est.id);
   };
 
   const filteredEstablishments = establishments.filter(est => {
