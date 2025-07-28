@@ -279,8 +279,11 @@ const handleRegistrarEvento = async () => {
           >
             Ver Establecimiento
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
-            Perfil
+          <button
+            className={`sidebar-btn ${isActive('/vercomentarios') ? 'active' : ''}`}
+            onClick={() => navigate('/vercomentarios')}
+          >
+            Ver Comentarios
           </button>
           <button className="sidebar-btn" onClick={() => console.log('Cerrar sesión')}>
             Cerrar sesión

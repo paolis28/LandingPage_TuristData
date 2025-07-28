@@ -55,8 +55,11 @@ export default function PanelEstablecimiento() {
             Agregar Evento
           </button>
 
-          <button className="sidebar-btn" onClick={() => console.log('Perfil')}>
-            Perfil
+          <button
+            className={`sidebar-btn ${isActive('/vercomentarios') ? 'active' : ''}`}
+            onClick={() => navigate('/vercomentarios')}
+          >
+            Ver Comentarios
           </button>
           <button
             className="sidebar-btn"
