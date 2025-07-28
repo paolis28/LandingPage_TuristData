@@ -226,6 +226,7 @@ const handleRegistrarEvento = async () => {
     setFechaInicioTemporada('');
     setFechaFinTemporada('');
     setTipoTemporada('');
+    setEstatus('')
     setTemporadaRegistrada(false);
     setIdTemporada(null);
 
@@ -335,7 +336,7 @@ const handleRegistrarEvento = async () => {
                 <button 
                   className="create-btn" 
                   onClick={handleRegistrarTemporada}
-                  disabled={cargando || !nombreTemporada || !fechaInicioTemporada || !fechaFinTemporada || !tipoTemporada || estatus}
+                  disabled={cargando || !nombreTemporada || !fechaInicioTemporada || !fechaFinTemporada || !tipoTemporada || !estatus}
                 >
                   {cargando ? 'Registrando...' : 'Registrar Temporada'}
                 </button>
