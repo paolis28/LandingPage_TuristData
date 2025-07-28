@@ -145,7 +145,7 @@ const handleRegistrarLugar = async () => {
     if (response.ok) {
       const data = await response.json();
       console.log('✅ Lugar creado:', data);
-      //setIdLugar(data.id || data.id_lugar || data.id_lugares);
+      setIdLugar(data.id || data.id_lugar || data.id_lugares);
       setLugarRegistrado(true);
       setMensaje('Lugar registrado con éxito');
     } else if (response.status === 401) {
