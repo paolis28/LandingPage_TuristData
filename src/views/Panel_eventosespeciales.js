@@ -48,37 +48,31 @@ const getAuthToken = () => {
 };
 
 const handleRegistrarTemporada = async () => {
-  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  const token = getAuthToken();
   if (!token) {
     setMensaje('No se encontró el token de autenticación');
     return;
   }
 
   setCargando(true);
-  // const formData = new FormData();
-  // formData.append('nombre', nombreTemporada);
-  // formData.append('fecha_inicio', fechaInicioTemporada);
-  // formData.append('fecha_fin', fechaFinTemporada);
-  // formData.append('tipo_temporada', tipoTemporada);
+  setMensaje('');
 
   const payload = {
-  nombre: nombreTemporada,
-  fecha_inicio: fechaInicioTemporada,
-  fecha_fin: fechaFinTemporada,
-  tipo_temporada: tipoTemporada,
-  estatus:estatus
-};
-
-
+    nombre: nombreTemporada,
+    fecha_inicio: fechaInicioTemporada,
+    fecha_fin: fechaFinTemporada,
+    tipo_temporada: tipoTemporada,
+    estatus: estatus
+  };
 
   try {
     const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json', // ✅ Especificamos JSON
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload), // ✅ Enviamos JSON en lugar de FormData
+      body: JSON.stringify(payload),
     });
 
     if (response.ok) {
@@ -88,11 +82,10 @@ const handleRegistrarTemporada = async () => {
       setTemporadaRegistrada(true);
       setMensaje('Temporada registrada con éxito');
     } else if (response.status === 401) {
-      // Token expirado
       setMensaje('Sesión expirada. Redirigiendo al login...');
       localStorage.removeItem('userData');
       setTimeout(() => {
-        navigate('/login'); // Asegúrate de tener useNavigate importado
+        navigate('/login');
       }, 2000);
     } else {
       const errorData = await response.json().catch(() => ({}));
@@ -107,68 +100,79 @@ const handleRegistrarTemporada = async () => {
   }
 };
 
-// Función para registrar lugar
+// ✅ FUNCIÓN CORREGIDA PARA REGISTRAR LUGAR
 const handleRegistrarLugar = async () => {
-  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  const token = getAuthToken();
   if (!token) {
     setMensaje('No se encontró el token de autenticación');
     return;
   }
 
-  setCargando(true);
+  // Validaciones
+  if (!nombreLugar.trim()) {
+    setMensaje('El nombre del lugar es requerido');
+    return;
+  }
 
-const payloadLu = {
-  nombre: nombreLugar,
-  estado: estadoLugar
-};
+  if (!estadoLugar) {
+    setMensaje('Debe seleccionar un estado');
+    return;
+  }
+
+  setCargando(true);
+  setMensaje('');
+
+  const payloadLu = {
+    nombre: nombreLugar.trim(),
+    estado: estadoLugar
+  };
+
+  console.log('🚀 Enviando datos del lugar:', payloadLu);
 
   try {
-    // const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`,
-    //     'Content-Type': 'application/json', // ✅ Especificamos JSON
-    //   },
-    //   body: JSON.stringify(payloadLu), // ✅ Enviamos JSON en lugar de FormData
-    // });
-
+    // ✅ FETCH LIMPIO SIN HEADERS INCORRECTOS
     const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        // Agregar headers adicionales para CORS
-        'Access-Control-Request-Method': 'POST',
-        'Access-Control-Request-Headers': 'Content-Type, Authorization'
+        'Content-Type': 'application/json'
       },
-      mode: 'cors', // Explícitamente habilitar CORS
-      credentials: 'omit', // No enviar cookies
-      body: JSON.stringify(payloadLu),
+      body: JSON.stringify(payloadLu)
     });
 
+    console.log('📡 Response status:', response.status);
 
     if (response.ok) {
       const data = await response.json();
-      console.log('Lugar creado:', data);
-      setIdLugar(data.id || data.id_lugares);
+      console.log('✅ Lugar creado:', data);
+      setIdLugar(data.id || data.id_lugar || data.id_lugares);
       setLugarRegistrado(true);
       setMensaje('Lugar registrado con éxito');
     } else if (response.status === 401) {
-      // Token expirado
       setMensaje('Sesión expirada. Redirigiendo al login...');
       localStorage.removeItem('userData');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } else {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('Error al registrar lugar:', errorData);
-      setMensaje(errorData.error || 'Error al registrar el lugar');
+      let errorMessage = `Error ${response.status}`;
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorData.message || errorMessage;
+      } catch (e) {
+        const errorText = await response.text();
+        if (errorText) errorMessage = errorText;
+      }
+      console.error('❌ Error del servidor:', errorMessage);
+      setMensaje(errorMessage);
     }
   } catch (error) {
-    console.error('Error de conexión:', error);
-    setMensaje('No se pudo conectar con el servidor');
+    console.error('💥 Error completo:', error);
+    if (error.message.includes('Failed to fetch')) {
+      setMensaje('Error de conexión: Verificar CORS en el servidor');
+    } else {
+      setMensaje(`Error de conexión: ${error.message}`);
+    }
   } finally {
     setCargando(false);
   }
@@ -181,7 +185,7 @@ const handleRegistrarEvento = async () => {
     return;
   }
 
-  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  const token = getAuthToken();
   if (!token) {
     setMensaje('No se encontró el token de autenticación');
     return;
@@ -201,7 +205,7 @@ const handleRegistrarEvento = async () => {
     const response = await fetch('https://turistdata-back.onrender.com/api/eventosespeciales/rg', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+        'Authorization': `Bearer ${token}`,
       },
       body: formData,
     });
@@ -212,7 +216,6 @@ const handleRegistrarEvento = async () => {
       setMensaje('Evento especial registrado con éxito');
       limpiarCamposEvento();
     } else if (response.status === 401) {
-      // Token expirado
       setMensaje('Sesión expirada. Redirigiendo al login...');
       localStorage.removeItem('userData');
       setTimeout(() => {
@@ -343,12 +346,13 @@ const handleRegistrarEvento = async () => {
                   </select>
                 </div>
 
+                {/* ✅ SELECT DE ESTATUS CORREGIDO */}
                 <div className="form-group">
                   <label>Estatus:</label>
                   <select value={estatus} onChange={(e) => setEstatus(e.target.value)}>
-                    <option value="">Selecciona el tipo</option>
-                    <option value="Alta">Activa</option>
-                    <option value="Media">En espera</option>
+                    <option value="">Selecciona el estatus</option>
+                    <option value="Activa">Activa</option>
+                    <option value="En espera">En espera</option>
                   </select>
                 </div>
 
@@ -365,6 +369,7 @@ const handleRegistrarEvento = async () => {
                 <p><strong>Nombre:</strong> {nombreTemporada}</p>
                 <p><strong>Período:</strong> {fechaInicioTemporada} al {fechaFinTemporada}</p>
                 <p><strong>Tipo:</strong> {tipoTemporada}</p>
+                <p><strong>Estatus:</strong> {estatus}</p>
               </div>
             )}
           </div>
