@@ -8,6 +8,7 @@ export default function PanelEventosEspeciales() {
   const [fechaInicioTemporada, setFechaInicioTemporada] = useState('');
   const [fechaFinTemporada, setFechaFinTemporada] = useState('');
   const [tipoTemporada, setTipoTemporada] = useState('');
+  const [estatus, setEstatus] = useState('');
   const [temporadaRegistrada, setTemporadaRegistrada] = useState(false);
   const [idTemporada, setIdTemporada] = useState(null);
 
@@ -64,7 +65,8 @@ const handleRegistrarTemporada = async () => {
   nombre: nombreTemporada,
   fecha_inicio: fechaInicioTemporada,
   fecha_fin: fechaFinTemporada,
-  tipo_temporada: tipoTemporada
+  tipo_temporada: tipoTemporada,
+  estatus:estatus
 };
 
 
@@ -321,10 +323,19 @@ const handleRegistrarEvento = async () => {
                   </select>
                 </div>
 
+                <div className="form-group">
+                  <label>Estatus:</label>
+                  <select value={estatus} onChange={(e) => setEstatus(e.target.value)}>
+                    <option value="">Selecciona el tipo</option>
+                    <option value="Alta">Activa</option>
+                    <option value="Media">En espera</option>
+                  </select>
+                </div>
+
                 <button 
                   className="create-btn" 
                   onClick={handleRegistrarTemporada}
-                  disabled={cargando || !nombreTemporada || !fechaInicioTemporada || !fechaFinTemporada || !tipoTemporada}
+                  disabled={cargando || !nombreTemporada || !fechaInicioTemporada || !fechaFinTemporada || !tipoTemporada || estatus}
                 >
                   {cargando ? 'Registrando...' : 'Registrar Temporada'}
                 </button>
