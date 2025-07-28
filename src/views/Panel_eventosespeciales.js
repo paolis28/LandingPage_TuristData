@@ -54,19 +54,29 @@ const handleRegistrarTemporada = async () => {
   }
 
   setCargando(true);
-  const formData = new FormData();
-  formData.append('nombre', nombreTemporada);
-  formData.append('fecha_inicio', fechaInicioTemporada);
-  formData.append('fecha_fin', fechaFinTemporada);
-  formData.append('tipo_temporada', tipoTemporada);
+  // const formData = new FormData();
+  // formData.append('nombre', nombreTemporada);
+  // formData.append('fecha_inicio', fechaInicioTemporada);
+  // formData.append('fecha_fin', fechaFinTemporada);
+  // formData.append('tipo_temporada', tipoTemporada);
+
+  const payload = {
+  nombre: nombreTemporada,
+  fecha_inicio: fechaInicioTemporada,
+  fecha_fin: fechaFinTemporada,
+  tipo_temporada: tipoTemporada
+};
+
+
 
   try {
     const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json', // ✅ Especificamos JSON
       },
-      body: formData,
+      body: JSON.stringify(payload), // ✅ Enviamos JSON en lugar de FormData
     });
 
     if (response.ok) {
