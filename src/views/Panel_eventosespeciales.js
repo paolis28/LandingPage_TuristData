@@ -116,9 +116,6 @@ const handleRegistrarLugar = async () => {
   }
 
   setCargando(true);
-  // const formData = new FormData();
-  // formData.append('nombre', nombreLugar);
-  // formData.append('estado', estadoLugar);
 
 const payloadLu = {
   nombre: nombreLugar,
@@ -126,13 +123,28 @@ const payloadLu = {
 };
 
   try {
+    // const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Authorization': `Bearer ${token}`,
+    //     'Content-Type': 'application/json', // ✅ Especificamos JSON
+    //   },
+    //   body: JSON.stringify(payloadLu), // ✅ Enviamos JSON en lugar de FormData
+    // });
+
     const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json', // ✅ Especificamos JSON
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        // Agregar headers adicionales para CORS
+        'Access-Control-Request-Method': 'POST',
+        'Access-Control-Request-Headers': 'Content-Type, Authorization'
       },
-      body: JSON.stringify(payloadLu), // ✅ Enviamos JSON en lugar de FormData
+      mode: 'cors', // Explícitamente habilitar CORS
+      credentials: 'omit', // No enviar cookies
+      body: JSON.stringify(payloadLu),
     });
 
 
