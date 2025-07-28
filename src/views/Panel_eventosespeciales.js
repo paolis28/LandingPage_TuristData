@@ -31,139 +31,174 @@ export default function PanelEventosEspeciales() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
-  // Función para registrar temporada
-  const handleRegistrarTemporada = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
-    }
-
-    setCargando(true);
-    const formData = new FormData();
-    formData.append('nombre', nombreTemporada);
-    formData.append('fecha_inicio', fechaInicioTemporada);
-    formData.append('fecha_fin', fechaFinTemporada);
-    formData.append('tipo_temporada', tipoTemporada);
-
+// Función para obtener el token correctamente
+const getAuthToken = () => {
+  const userDataStr = localStorage.getItem('userData');
+  if (userDataStr) {
     try {
-      const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Temporada creada:', data);
-        setIdTemporada(data.id || data.id_temporadas);
-        setTemporadaRegistrada(true);
-        setMensaje('Temporada registrada con éxito');
-      } else {
-        const errorText = await response.text();
-        console.error('Error al registrar temporada:', errorText);
-        setMensaje('Error al registrar la temporada');
-      }
+      const userData = JSON.parse(userDataStr);
+      return userData.token;
     } catch (error) {
-      console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
-    } finally {
-      setCargando(false);
+      console.error('Error parsing userData:', error);
+      return null;
     }
-  };
+  }
+  return null;
+};
 
-  // Función para registrar lugar
-  const handleRegistrarLugar = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
+const handleRegistrarTemporada = async () => {
+  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  if (!token) {
+    setMensaje('No se encontró el token de autenticación');
+    return;
+  }
+
+  setCargando(true);
+  const formData = new FormData();
+  formData.append('nombre', nombreTemporada);
+  formData.append('fecha_inicio', fechaInicioTemporada);
+  formData.append('fecha_fin', fechaFinTemporada);
+  formData.append('tipo_temporada', tipoTemporada);
+
+  try {
+    const response = await fetch('https://turistdata-back.onrender.com/api/temporada/rg', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Temporada creada:', data);
+      setIdTemporada(data.id || data.id_temporadas);
+      setTemporadaRegistrada(true);
+      setMensaje('Temporada registrada con éxito');
+    } else if (response.status === 401) {
+      // Token expirado
+      setMensaje('Sesión expirada. Redirigiendo al login...');
+      localStorage.removeItem('userData');
+      setTimeout(() => {
+        navigate('/login'); // Asegúrate de tener useNavigate importado
+      }, 2000);
+    } else {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Error al registrar temporada:', errorData);
+      setMensaje(errorData.error || 'Error al registrar la temporada');
     }
+  } catch (error) {
+    console.error('Error de conexión:', error);
+    setMensaje('No se pudo conectar con el servidor');
+  } finally {
+    setCargando(false);
+  }
+};
 
-    setCargando(true);
-    const formData = new FormData();
-    formData.append('nombre', nombreLugar);
-    formData.append('estado', estadoLugar);
+// Función para registrar lugar
+const handleRegistrarLugar = async () => {
+  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  if (!token) {
+    setMensaje('No se encontró el token de autenticación');
+    return;
+  }
 
-    try {
-      const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+  setCargando(true);
+  const formData = new FormData();
+  formData.append('nombre', nombreLugar);
+  formData.append('estado', estadoLugar);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Lugar creado:', data);
-        setIdLugar(data.id || data.id_lugares);
-        setLugarRegistrado(true);
-        setMensaje('Lugar registrado con éxito');
-      } else {
-        const errorText = await response.text();
-        console.error('Error al registrar lugar:', errorText);
-        setMensaje('Error al registrar el lugar');
-      }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
-    } finally {
-      setCargando(false);
+  try {
+    const response = await fetch('https://turistdata-back.onrender.com/api/lugares/rg', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Lugar creado:', data);
+      setIdLugar(data.id || data.id_lugares);
+      setLugarRegistrado(true);
+      setMensaje('Lugar registrado con éxito');
+    } else if (response.status === 401) {
+      // Token expirado
+      setMensaje('Sesión expirada. Redirigiendo al login...');
+      localStorage.removeItem('userData');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    } else {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Error al registrar lugar:', errorData);
+      setMensaje(errorData.error || 'Error al registrar el lugar');
     }
-  };
+  } catch (error) {
+    console.error('Error de conexión:', error);
+    setMensaje('No se pudo conectar con el servidor');
+  } finally {
+    setCargando(false);
+  }
+};
 
-  // Función para registrar evento especial
-  const handleRegistrarEvento = async () => {
-    if (!temporadaRegistrada || !lugarRegistrado) {
-      setMensaje('Primero debe registrar la temporada y el lugar');
-      return;
+// Función para registrar evento especial
+const handleRegistrarEvento = async () => {
+  if (!temporadaRegistrada || !lugarRegistrado) {
+    setMensaje('Primero debe registrar la temporada y el lugar');
+    return;
+  }
+
+  const token = getAuthToken(); // CAMBIADO: usar la función para obtener el token
+  if (!token) {
+    setMensaje('No se encontró el token de autenticación');
+    return;
+  }
+
+  setCargando(true);
+  const formData = new FormData();
+  formData.append('nombre', nombreEvento);
+  formData.append('fecha_inicio', fechaInicioEvento);
+  formData.append('fecha_final', fechaFinalEvento);
+  formData.append('descripcion', descripcionEvento);
+  formData.append('estado_afectado', estadoAfectado);
+  formData.append('id_temporada', idTemporada);
+  formData.append('id_lugar', idLugar);
+
+  try {
+    const response = await fetch('https://turistdata-back.onrender.com/api/eventosespeciales/rg', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Asegurar formato correcto
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Evento creado:', data);
+      setMensaje('Evento especial registrado con éxito');
+      limpiarCamposEvento();
+    } else if (response.status === 401) {
+      // Token expirado
+      setMensaje('Sesión expirada. Redirigiendo al login...');
+      localStorage.removeItem('userData');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+    } else {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Error al registrar evento:', errorData);
+      setMensaje(errorData.error || 'Error al registrar el evento especial');
     }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setMensaje('No se encontró el token de autenticación');
-      return;
-    }
-
-    setCargando(true);
-    const formData = new FormData();
-    formData.append('nombre', nombreEvento);
-    formData.append('fecha_inicio', fechaInicioEvento);
-    formData.append('fecha_final', fechaFinalEvento);
-    formData.append('descripcion', descripcionEvento);
-    formData.append('estado_afectado', estadoAfectado);
-    formData.append('id_temporada', idTemporada);
-    formData.append('id_lugar', idLugar);
-
-    try {
-      const response = await fetch('https://turistdata-back.onrender.com/api/eventosespeciales/rg', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Evento creado:', data);
-        setMensaje('Evento especial registrado con éxito');
-        limpiarCamposEvento();
-      } else {
-        const errorText = await response.text();
-        console.error('Error al registrar evento:', errorText);
-        setMensaje('Error al registrar el evento especial');
-      }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      setMensaje('No se pudo conectar con el servidor');
-    } finally {
-      setCargando(false);
-    }
-  };
+  } catch (error) {
+    console.error('Error de conexión:', error);
+    setMensaje('No se pudo conectar con el servidor');
+  } finally {
+    setCargando(false);
+  }
+};
 
   const limpiarCamposEvento = () => {
     setNombreEvento('');
