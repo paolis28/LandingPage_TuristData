@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -190,7 +191,7 @@ const Estadisticas = () => {
           <div className="card">Visitas en un Año<br /><strong>{data.length}</strong></div>
           <div className="card">Rango de fechas<br /><strong>2024 - 2025</strong></div>
           <div className="card">Datos cargados<br /><strong>{predictedData.length}</strong></div>
-          {/* Eliminamos la tarjeta del promedio de estrellas de aquí */}
+          {}
         </section>
 
         {loading && <p>Cargando predicción...</p>}
@@ -243,5 +244,4 @@ const Estadisticas = () => {
     </div>
   );
 };
-
 export default Estadisticas;
