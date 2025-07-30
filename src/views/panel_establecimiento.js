@@ -70,8 +70,9 @@ export default function PanelEstablecimiento() {
           >
             Cerrar sesión
           </button>
-          <button className="sidebar-btn" onClick={() => console.log('Acerca de')}>
-            Acerca de
+          <button className="sidebar-btn" onClick={() => navigate('/Estadisticas')}>
+            Estadistica
+            
           </button>
         </div>
       </div>
