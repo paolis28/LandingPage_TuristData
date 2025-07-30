@@ -10,6 +10,7 @@ import PanelCrear from '../views/panel_crear';
 import PanelVerEstablecimiento from '../views/panelVer_establecimiento';
 import PanelEventosEspeciales from '../views/Panel_eventosespeciales';
 import PanelVerComentarios from '../views/Comentarios';
+import Estadisticas from '../views/Estadisticas';
 
 const Rutas = () => {
   return (
@@ -25,6 +26,7 @@ const Rutas = () => {
       <Route path="/verestablecimiento" element={<PanelVerEstablecimiento />} /> 
       <Route path="/crearevento" element={<PanelEventosEspeciales />} /> 
       <Route path="/vercomentarios" element={<PanelVerComentarios />} /> 
+        <Route path="/Estadisticas" element={<Estadisticas />} />
     </Routes>
   );
 };
